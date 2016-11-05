@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/exploded-aar/Hardware-release/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="d30a44d837c8f25360e4190341f43399eea81172">
+        <dex dex="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/transforms/dex/debug/folders/1000/10/intermediates-exploded-aar-Hardware-release_bc854f7df46fb90a4662208ae9db566c031f0437/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="6eb3ef0ccc13a2ce842e5487a48512f665b8d847">
+        <dex dex="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_e7dbefe4f13d448c60a0b55b9d65c944c1d69955/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/exploded-aar/WirelessP2p-release/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="9403be210676ed196cdcc64c7391b9ae2361c174">
+        <dex dex="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/transforms/dex/debug/folders/1000/10/intermediates-exploded-aar-WirelessP2p-release_22df397c16da4ab49dd5461ef249d08183b75010/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/exploded-aar/RobotCore-release/jars/libs/support-annotations-23.4.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="5a051fb9930d4b0df111f4e71ba2c97136f8d1f7">
+        <dex dex="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.4.0_3a2429b7592098adb132e81a6d458d1e966b1889/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/exploded-aar/Blocks-release/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="442e93c10918df3270cc37f9fcf9e90c43072eea">
+        <dex dex="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/transforms/dex/debug/folders/1000/10/intermediates-exploded-aar-Blocks-release_a683bb7939188de974c5863b27f6259c2727d039/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/exploded-aar/RobotCore-release/jars/libs/d2xx.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="84a174a0d6bebc32bf1e7cd4139224f0b05df829">
+        <dex dex="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/transforms/dex/debug/folders/1000/10/d2xx_36fcf606afb93704d275a1f5b9e8b06ca29b8648/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/exploded-aar/RobotCore-release/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="dc4ad03580e3f29564476f06b65f06d89704c0a9">
+        <dex dex="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/transforms/dex/debug/folders/1000/10/intermediates-exploded-aar-RobotCore-release_8eb201d2e0a9c59ee13df3cc779691b17c58b13f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/exploded-aar/RobotCore-release/jars/libs/gson-2.7.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="d3fb718ef307cfff9ad988d06b98eadc292d1a34">
+        <dex dex="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/transforms/dex/debug/folders/1000/10/gson-2.7_3f4e17f2b852c66d5dba6a539fcebd5e74a83efe/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/exploded-aar/ModernRobotics-release/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="01999c87afe3d10ffa06f3efa66f39e61e6aba0c">
+        <dex dex="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/transforms/dex/debug/folders/1000/10/intermediates-exploded-aar-ModernRobotics-release_fff354ab233ecb53b10b87866b290e6b36ab9898/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="b5673331cb52fa4607953e4af51641c8c45966e2">
+        <dex dex="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_de839eed636a76f1ebe15cc09c23850ab9295e42/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/exploded-aar/FtcCommon-release/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="2204deca0490727b9009dba5cdb2ec515cdbcc63">
+        <dex dex="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/transforms/dex/debug/folders/1000/10/intermediates-exploded-aar-FtcCommon-release_e9701ed5bdfe03b4eee5f18b9a054098509e853f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/exploded-aar/Analytics-release/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="9dafed45e330aec14abcce05bdb7bbdb2a2d7092">
+        <dex dex="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/transforms/dex/debug/folders/1000/10/intermediates-exploded-aar-Analytics-release_360a7ca5aa7608db26e3c9805383e1cb6a1083af/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/exploded-aar/RobotCore-release/jars/libs/Vuforia.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="f1dde8a0e6ed1172450c657386da45fd1d7565f4">
+        <dex dex="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/transforms/dex/debug/folders/1000/10/Vuforia_ca39fda7489b2aefc19bc3d6cd6827463de74829/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/exploded-aar/Inspection-release/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="b3051d2a26a36e5b402fd8aa14ec8a4bea328974">
+        <dex dex="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/transforms/dex/debug/folders/1000/10/intermediates-exploded-aar-Inspection-release_66a1a3a001bd0c6c31dfe69ee66f10c851979d05/classes.dex" />
+    </item>
+
+</items>

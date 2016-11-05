@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/merged/debug/menu/menu_server.xml",
+        "source": "/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/exploded-aar/Blocks-release/res/menu/menu_server.xml"
+    },
+    {
+        "merged": "/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/merged/debug/menu/main_menu.xml",
+        "source": "/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/exploded-aar/Inspection-release/res/menu/main_menu.xml"
+    },
+    {
+        "merged": "/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/merged/debug/menu/ftc_robot_controller.xml",
+        "source": "/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/exploded-aar/RSF_FTC_Source/FtcRobotController/unspecified/res/menu/ftc_robot_controller.xml"
+    }
+]
