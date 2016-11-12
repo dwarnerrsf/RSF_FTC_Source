@@ -45,8 +45,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefau
 public class RSF_VuforiaOpTest extends LinearOpMode {
     private final String VuforiaKey = "AZjwTlP/////AAAAGQ0Nw67MdEzAm0Cuvb+oJGOCSFyqWb6WplQDZyJo9vOTw0iLTPRXEXyjZ/WAN+V4wKPlbTv0pbPad2yBRZ3vyHl4hRafu7wJGLMgzfsTeozU4SzDgl378Q3zGZsJWK+UkfmekmXkzeysQqnkL0rZK+1KNaARZjbR14/OONP2j9AjqOoJa6yMMMN/2jgM5x/Lshv/++vTyHUzJYs7rEHh26FGDtlE9J8FoRXaNPrii2i3j2msG2bTO0AzrlwnK6AMtP92bqRGHnIvU4GQVnMgi2fn/EoxNRLiNktloDfdzv9vRaU3zgpOENxmqzkfdBskZzfy6EYGsEzMQPtJ07brBfDhC0l9w4kvuBi2i5dK7Mbo";
 
-    private RSF_RobotEngine engine = new RSF_RobotEngine();
-    private RSF_Vuforia vuforia = new RSF_Vuforia();
+    private RSF_EngineModule engine = new RSF_EngineModule();
+    private RSF_VuforiaModule vuforia = new RSF_VuforiaModule();
     private ElapsedTime period = new ElapsedTime();
 
     @Override

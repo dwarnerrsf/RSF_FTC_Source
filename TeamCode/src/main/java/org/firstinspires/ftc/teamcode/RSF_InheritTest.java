@@ -32,15 +32,12 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.ElapsedTime;
 import com.vuforia.HINT;
 import com.vuforia.Vuforia;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
-import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -52,7 +49,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
 
 @TeleOp(name="Pushbot: Inherit Test", group="Pushbot")
-public class RSF_InheritTest extends RSF_BaseClassTest {
+public class RSF_InheritTest extends RSF_BaseOp {
     OpenGLMatrix lastLocation = null;
 
     @Override
@@ -76,8 +73,9 @@ public class RSF_InheritTest extends RSF_BaseClassTest {
 
         float mmPerInch        = 25.4f;
         float mmBotWidth       = 18 * mmPerInch;
-        float mmFTCFieldWidth  = (12*12 - 2) * mmPerInch;
-        String tag = "Vuforia Sample";
+        float mmFTCFieldWidth  = ((12 * 12) - 2) * mmPerInch;
+
+
 
         OpenGLMatrix target1 = OpenGLMatrix
                 /* Then we translate the target off to the RED WALL. Our translation here
@@ -136,7 +134,22 @@ public class RSF_InheritTest extends RSF_BaseClassTest {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            for (VuforiaTrackable item: beacons) {
+
+            VuforiaTrackable legos = beacons.get(2);
+            OpenGLMatrix location = ((VuforiaTrackableDefaultListener)legos.getListener()).getUpdatedRobotLocation();
+
+            if (location != null) {
+                telemetry.addData(legos.getName(), ((VuforiaTrackableDefaultListener)legos.getListener()).isVisible() ? "Visible" : "Not Visible");
+                float[] coords = location.getTranslation().getData();
+                telemetry.addData("X: ", coords[0]);
+                telemetry.addData("Y: ", coords[1]);
+                float rotation = Orientation.getOrientation(location, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
+                telemetry.addData("Rotation: ", rotation);
+            }
+
+
+
+            /*for (VuforiaTrackable item: beacons) {
                 OpenGLMatrix pose = ((VuforiaTrackableDefaultListener) item.getListener()).getPose();
 
                 if (pose != null) {
@@ -149,11 +162,26 @@ public class RSF_InheritTest extends RSF_BaseClassTest {
                     telemetry.addData(name, ((VuforiaTrackableDefaultListener)item.getListener()).isVisible() ? "Visible" : "Not Visible");
                     OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)item.getListener()).getUpdatedRobotLocation();
 
+                    if (robotLocationTransform == null) {
+                        telemetry.addData("Matrix: ", "Is Null.");
+                    }
+                    else {
+                        telemetry.addData("Matrix: ", "Is not Null.");
+                    }
+
                     if (robotLocationTransform != null) {
                         lastLocation = robotLocationTransform;
                     }
+
+                    if (robotLocationTransform != null) {
+                        float[] coords = robotLocationTransform.getTranslation().getData();
+                        telemetry.addData(name + "X: ", coords[0]);
+                        telemetry.addData(name + "Y: ", coords[1]);
+                        float rotation = Orientation.getOrientation(robotLocationTransform, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
+                        telemetry.addData(name + "Rotation: ", rotation);
+                    }
                 }
-            }
+            }*/
 
             RSF_MoveInput movement = RSF_MoveInput.Check(gamepad1);
 
@@ -169,12 +197,12 @@ public class RSF_InheritTest extends RSF_BaseClassTest {
                     break;
             }
 
-            if (lastLocation != null) {
+            /*if (lastLocation != null) {
                 telemetry.addData("Pos", format(lastLocation));
             }
             else {
                 telemetry.addData("Pos", "Unknown");
-            }
+            }*/
 
             Update();
         }

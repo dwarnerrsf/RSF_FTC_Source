@@ -5,29 +5,29 @@
     density="xhdpi"
     format="8"
     plugin-version="2.2.2"
-    timestamp="17177716536237"
+    timestamp="13876332228997"
     token="-2353666316279564087"
     verifier="FULL_BUILD_REQUESTED" >
 
     <task
         name="javac"
-        duration="239" />
+        duration="167" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="334" />
+        duration="232" />
     <task
         name="verifier"
-        duration="67" />
+        duration="52" />
 
     <artifact
         location="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/outputs/apk/TeamCode-debug.apk"
         type="MAIN" />
 
     <build
-        timestamp="17177716536237"
+        timestamp="13876332228997"
         verifier="FULL_BUILD_REQUESTED" >
         <artifact
             location="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/outputs/apk/TeamCode-debug.apk"

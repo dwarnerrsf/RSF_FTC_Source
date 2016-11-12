@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
-public class RSF_RobotEngine {
+public class RSF_EngineModule {
     private DcMotor motor_FrontLeft = null;
     private DcMotor motor_BackLeft = null;
     private DcMotor motor_FrontRight = null;

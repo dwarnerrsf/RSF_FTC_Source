@@ -49,22 +49,22 @@ import com.qualcomm.robotcore.hardware.DigitalChannelController;
  * This is an example LinearOpMode that shows how to use
  * the Adafruit RGB Sensor.  It assumes that the I2C
  * cable for the sensor is connected to an I2C port on the
- * Core Device Interface Module.
+ * Core Device Interface RSF_VuforiaModule.
  *
  * It also assuems that the LED pin of the sensor is connected
  * to the digital signal pin of a digital port on the
- * Core Device Interface Module.
+ * Core Device Interface RSF_VuforiaModule.
  *
  * You can use the digital port to turn the sensor's onboard
  * LED on or off.
  *
- * The op mode assumes that the Core Device Interface Module
+ * The op mode assumes that the Core Device Interface RSF_VuforiaModule
  * is configured with a name of "dim" and that the Adafruit color sensor
  * is configured as an I2C device with a name of "sensor_color".
  *
  * It also assumes that the LED pin of the RGB sensor
  * is connected to the signal pin of digital port #5 (zero indexed)
- * of the Core Device Interface Module.
+ * of the Core Device Interface RSF_VuforiaModule.
  *
  * You can use the X button on gamepad1 to toggle the LED on and off.
  *
@@ -102,7 +102,7 @@ public class ColorSensorCalibration extends LinearOpMode {
     boolean bLedOn = true;
 
     // get a reference to our DeviceInterfaceModule object.
-    cdim = hardwareMap.deviceInterfaceModule.get("Device Interface Module 1");
+    cdim = hardwareMap.deviceInterfaceModule.get("Device Interface RSF_VuforiaModule 1");
 
     // set the digital channel to output mode.
     // remember, the Adafruit sensor is actually two devices.
