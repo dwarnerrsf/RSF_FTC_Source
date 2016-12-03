@@ -18,7 +18,6 @@ public class RSF_VuforiaModule {
     private VuforiaTrackables _beacons = null;
 
     public VuforiaTrackables Beacons() { return _beacons; }
-
     public void Activate() {
         _beacons.activate();
     }
@@ -26,7 +25,7 @@ public class RSF_VuforiaModule {
         return _beacons.get(index);
     }
 
-    public void Initialize(String key) {
+    public void Initialize(RSF_States.TeamColor team, String key) {
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(R.id.cameraMonitorViewId);
         parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
         parameters.cameraMonitorFeedback = VuforiaLocalizer.Parameters.CameraMonitorFeedback.AXES;
@@ -68,11 +67,15 @@ public class RSF_VuforiaModule {
         _beacons.get(3).setLocation(target4);
 
         OpenGLMatrix phoneLocationOnRobot = OpenGLMatrix.translation(mmBotWidth/2,0,0)
-                .multiplied(Orientation.getRotationMatrix(AxesReference.EXTRINSIC, AxesOrder.YZY, AngleUnit.DEGREES, -90, 0, 0));
+                .multiplied((team == RSF_States.TeamColor.Red) ? Orientation.getRotationMatrix(AxesReference.EXTRINSIC, AxesOrder.YZY, AngleUnit.DEGREES, -90, 0, 0) : Orientation.getRotationMatrix(AxesReference.EXTRINSIC, AxesOrder.YZY, AngleUnit.DEGREES, -90, -90, 0));
 
         ((VuforiaTrackableDefaultListener)_beacons.get(0).getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
         ((VuforiaTrackableDefaultListener)_beacons.get(1).getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
         ((VuforiaTrackableDefaultListener)_beacons.get(2).getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
         ((VuforiaTrackableDefaultListener)_beacons.get(3).getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
+    }
+
+    public RSF_Beacon LocateBeacon(int beaconIndex) {
+        return new RSF_Beacon(GetBeacon(beaconIndex));
     }
 }

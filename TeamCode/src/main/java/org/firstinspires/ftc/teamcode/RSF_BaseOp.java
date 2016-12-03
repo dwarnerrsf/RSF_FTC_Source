@@ -63,9 +63,9 @@ public class RSF_BaseOp extends LinearOpMode {
         engine.Initialize(hardwareMap);
     }
 
-    protected void Initialize(String vuforiaKey) {
+    protected void Initialize(RSF_States.TeamColor team, String vuforiaKey) {
         engine.Initialize(hardwareMap);
-        vuforia.Initialize(vuforiaKey);
+        vuforia.Initialize(team, vuforiaKey);
     }
 
     protected void Update() {

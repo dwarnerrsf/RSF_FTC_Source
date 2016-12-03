@@ -13,10 +13,10 @@ public class RSF_EngineModule {
 
     public void Initialize(HardwareMap hardwareMap) {
         // Define and Initialize Motors
-        motor_FrontLeft = hardwareMap.dcMotor.get("left_Front");
-        motor_BackLeft = hardwareMap.dcMotor.get("left_Back");
-        motor_FrontRight = hardwareMap.dcMotor.get("right_Front");
-        motor_BackRight = hardwareMap.dcMotor.get("right_Back");
+        motor_FrontLeft = hardwareMap.dcMotor.get("LF");
+        motor_BackLeft = hardwareMap.dcMotor.get("LB");
+        motor_FrontRight = hardwareMap.dcMotor.get("RF");
+        motor_BackRight = hardwareMap.dcMotor.get("RB");
 
         // Set to REVERSE if using AndyMark motors
         motor_FrontLeft.setDirection(DcMotor.Direction.FORWARD);

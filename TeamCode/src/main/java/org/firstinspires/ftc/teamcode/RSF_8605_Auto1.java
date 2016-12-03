@@ -49,7 +49,7 @@ public class RSF_8605_Auto1 extends RSF_BaseOp {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Initialize(VuforiaLicenseKey);
+        Initialize(RSF_States.TeamColor.Red, VuforiaLicenseKey);
         engine.SetSpeed(0.15d);
 
         // Wait for the game to start (driver presses PLAY)
@@ -79,7 +79,6 @@ public class RSF_8605_Auto1 extends RSF_BaseOp {
             if (location != null) {
                 float[] coords = location.getTranslation().getData();
                 float rotation = Orientation.getOrientation(location, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
-
                 double rotateSpeed = 0.10d;
                 double forwardSpeed = 0.15d;
 

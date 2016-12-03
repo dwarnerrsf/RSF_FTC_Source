@@ -53,7 +53,7 @@ public class RSF_VuforiaOpTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         engine.Initialize(hardwareMap);
         engine.SetSpeed(1.0d);
-        vuforia.Initialize(VuforiaKey);
+        vuforia.Initialize(RSF_States.TeamColor.Red, VuforiaKey);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();

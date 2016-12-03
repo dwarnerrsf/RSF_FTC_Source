@@ -10,4 +10,8 @@ public class RSF_States {
     public enum MoveType {
         None, Dpad, Joystick
     }
+
+    public enum TeamColor {
+        Blue, None, Red
+    }
 }
