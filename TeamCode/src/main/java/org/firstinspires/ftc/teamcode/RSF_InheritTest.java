@@ -54,7 +54,7 @@ public class RSF_InheritTest extends RSF_BaseOp {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Initialize();
+        engine.Initialize(hardwareMap);
         engine.SetSpeed(1.0d);
 
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(R.id.cameraMonitorViewId);

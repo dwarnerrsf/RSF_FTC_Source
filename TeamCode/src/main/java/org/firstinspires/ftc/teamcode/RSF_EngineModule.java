@@ -66,6 +66,40 @@ public class RSF_EngineModule {
         }
     }
 
+    public void Move(RSF_States.DPad dpad, double speed) {
+        motorSpeed = speed;
+
+        switch (dpad) {
+            case Down:
+                SetPower(-motorSpeed, -motorSpeed, -motorSpeed, -motorSpeed);
+                break;
+            case DownLeft:
+                SetPower(motorSpeed, 0.0d, motorSpeed, 0.0d);
+                break;
+            case DownRight:
+                SetPower(-motorSpeed, 0.0d, -motorSpeed, 0.0d);
+                break;
+            case Left:
+                SetPower(-motorSpeed, motorSpeed, -motorSpeed, motorSpeed);
+                break;
+            case Right:
+                SetPower(motorSpeed, -motorSpeed, motorSpeed, -motorSpeed);
+                break;
+            case Up:
+                SetPower(motorSpeed, motorSpeed, motorSpeed, motorSpeed);
+                break;
+            case UpLeft:
+                SetPower(0.0d, -motorSpeed, 0.0d, -motorSpeed);
+                break;
+            case UpRight:
+                SetPower(0.0d, motorSpeed, 0.0d, motorSpeed);
+                break;
+            default:
+                SetPower(motorSpeed, motorSpeed, motorSpeed, motorSpeed);
+                break;
+        }
+    }
+
     public void Move(RSF_Joysticks joysticks) {
         SetPower(joysticks.Left(), joysticks.Left(), joysticks.Right(), joysticks.Right());
     }
@@ -91,5 +125,9 @@ public class RSF_EngineModule {
 
     public void Stop() {
         SetPower(0.0d, 0.0d, 0.0d, 0.0d);
+    }
+
+    public double TestPower() {
+        return motorSpeed;
     }
 }

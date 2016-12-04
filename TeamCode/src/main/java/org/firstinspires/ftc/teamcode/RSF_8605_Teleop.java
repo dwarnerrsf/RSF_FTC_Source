@@ -38,28 +38,24 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name="Pushbot: 8605 Teleop", group="Pushbot")
 public class RSF_8605_Teleop extends RSF_BaseOp {
-    DcMotor collector = null;
-    DcMotor lift = null;
-    DcMotor pusher = null;
-    DcMotor shooter = null;
+    private DcMotor pusher = null;
 
-    private double moveSpeed = 0.70d;
+    private double moveSpeed = 1.0d;
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Initialize();
-        collector = hardwareMap.dcMotor.get("COLLECT");
-        lift = hardwareMap.dcMotor.get("LIFT");
-        pusher = hardwareMap.dcMotor.get("PUSH");
-        shooter = hardwareMap.dcMotor.get("SHOOT");
+        moveSpeed = 1.0d;
 
-
-        collector.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        pusher.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        shooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
+        engine.Initialize(hardwareMap);
         engine.SetSpeed(moveSpeed);
+
+        collector.Initialize(hardwareMap, DcMotor.Direction.REVERSE);
+        lift.Initialize(hardwareMap);
+        shooter.Initialize(hardwareMap);
+
+        pusher = hardwareMap.dcMotor.get("PUSH");
+        pusher.setDirection(DcMotor.Direction.FORWARD);
+        pusher.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         pusher.setPower(0.0d);
 
         // Wait for the game to start (driver presses PLAY)
@@ -71,7 +67,7 @@ public class RSF_8605_Teleop extends RSF_BaseOp {
 
             switch (movement.MoveType()) {
                 case Dpad:
-                    engine.Move(movement.Dpad());
+                    engine.Move(movement.Dpad(), moveSpeed);
                     break;
                 case Joystick:
                     engine.Move(movement.Joystick());
@@ -90,32 +86,42 @@ public class RSF_8605_Teleop extends RSF_BaseOp {
 
     private void Player_One() {
         if (gamepad1.left_trigger > 0.0d) {
-            collector.setPower(1.0d);
+            collector.EnableReverse();
         }
         else if (gamepad1.right_trigger > 0.0d) {
-            collector.setPower(-1.0d);
+            collector.EnableForward();
         }
         else {
-            collector.setPower(0.0d);
+            collector.Disable();
+        }
+
+        if (gamepad1.a) {
+            engine.SetSpeed(0.0d);
+        }
+        else if (gamepad1.b) {
+            engine.SetSpeed(1.0d);
+        }
+        else if (gamepad1.x) {
+            engine.SetSpeed(0.50d);
         }
     }
 
     private void Player_Two() {
         if (gamepad2.b) {
-            shooter.setPower(1.0d);
+            shooter.EnableForward();
         }
         else {
-            shooter.setPower(0.0d);
+            shooter.Disable();
         }
 
         if (gamepad2.left_trigger > 0.0d) {
-            lift.setPower(-1.0d);
+            lift.EnableReverse();
         }
         else if (gamepad2.right_trigger > 0.0d) {
-            lift.setPower(1.0d);
+            lift.EnableForward();
         }
         else {
-            lift.setPower(0.0d);
+            lift.Disable();
         }
 
         if (gamepad2.dpad_left) {

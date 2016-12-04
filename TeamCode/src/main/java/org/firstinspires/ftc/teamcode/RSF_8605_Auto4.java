@@ -51,7 +51,7 @@ public class RSF_8605_Auto4 extends RSF_BaseOp {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Initialize(RSF_States.TeamColor.Red, VuforiaLicenseKey);
+        vuforia.Initialize(RSF_States.TeamColor.Red, VuforiaLicenseKey);
         engine.SetSpeed(0.15d);
 
         // Wait for the game to start (driver presses PLAY)

@@ -11,6 +11,10 @@ public class RSF_States {
         None, Dpad, Joystick
     }
 
+    public enum SensorColor {
+        Blue, None, Red
+    }
+
     public enum TeamColor {
         Blue, None, Red
     }

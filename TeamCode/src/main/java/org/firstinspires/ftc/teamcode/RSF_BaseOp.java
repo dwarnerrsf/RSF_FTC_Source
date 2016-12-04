@@ -39,13 +39,27 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="Pushbot: Do Not Use Me", group="Pushbot")
 public class RSF_BaseOp extends LinearOpMode {
+    protected RSF_CollectorModule collector = new RSF_CollectorModule();
+    protected RSF_ColorModule color = new RSF_ColorModule();
+    protected RSF_DeviceInterfaceModule deviceInterface = new RSF_DeviceInterfaceModule();
     protected RSF_EngineModule engine = new RSF_EngineModule();
+    protected RSF_LiftModule lift = new RSF_LiftModule();
+    protected RSF_ShooterModule shooter = new RSF_ShooterModule();
     protected RSF_VuforiaModule vuforia = new RSF_VuforiaModule();
     protected ElapsedTime period = new ElapsedTime();
 
     @Override
     public void runOpMode() throws InterruptedException {
 
+    }
+
+    protected void Update() {
+        telemetry.update();
+    }
+
+    protected void Update(long time) throws InterruptedException {
+        telemetry.update();
+        WaitForTick(time);
     }
 
     private void WaitForTick(long periodMs) throws InterruptedException {
@@ -57,23 +71,5 @@ public class RSF_BaseOp extends LinearOpMode {
 
         // Reset the cycle clock for the next pass.
         period.reset();
-    }
-
-    protected void Initialize() {
-        engine.Initialize(hardwareMap);
-    }
-
-    protected void Initialize(RSF_States.TeamColor team, String vuforiaKey) {
-        engine.Initialize(hardwareMap);
-        vuforia.Initialize(team, vuforiaKey);
-    }
-
-    protected void Update() {
-        telemetry.update();
-    }
-
-    protected void Update(long time) throws InterruptedException {
-        telemetry.update();
-        WaitForTick(time);
     }
 }
