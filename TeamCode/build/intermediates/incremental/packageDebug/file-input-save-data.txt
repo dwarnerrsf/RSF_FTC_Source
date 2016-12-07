@@ -1,7 +1,7 @@
 #Internal package file, do not edit.
-#Sun Dec 04 13:36:45 PST 2016
+#Tue Dec 06 20:24:18 PST 2016
 14.set=DEX
-180.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/raw/chimeconnect.wav
+180.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/raw/texture_fragment_shader.glsl
 118.set=ANDROID_RESOURCE
 60.set=ASSET
 2.set=DEX
@@ -59,7 +59,7 @@
 154.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/assets/debug/images/ftcDeviceInterfaceModule.png
 167.set=ANDROID_RESOURCE
 24.set=ASSET
-181.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/raw/texture_fragment_shader.glsl
+181.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/raw/chimeconnect.wav
 128.set=ASSET
 70.set=DEX
 27.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/layout/activity_config_wifi_direct.xml
@@ -219,7 +219,7 @@
 204.set=ASSET
 9.base=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/assets/debug
 105.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/xml/device_filter.xml
-157.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/layout/device_interface_module.xml
+157.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/drawable-xhdpi-v4/icon_robotcontroller.png
 191.set=ASSET
 132.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/layout/orange_warning.xml
 54.set=ASSET
@@ -273,7 +273,7 @@
 208.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/assets/debug/RobotConfigTaxonomy.xsd
 106.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/assets/debug/blockly/media/click.wav
 18.set=ANDROID_RESOURCE
-158.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/drawable-xhdpi-v4/icon_robotcontroller.png
+158.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/layout/device_interface_module.xml
 133.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/transforms/dex/debug/folders/1000/10/gson-2.7_3f4e17f2b852c66d5dba6a539fcebd5e74a83efe/classes.dex
 64.set=ANDROID_RESOURCE
 185.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/xml/pushbot.xml

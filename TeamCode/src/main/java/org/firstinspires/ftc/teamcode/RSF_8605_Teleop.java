@@ -70,7 +70,7 @@ public class RSF_8605_Teleop extends RSF_BaseOp {
                     engine.Move(movement.Dpad(), moveSpeed);
                     break;
                 case Joystick:
-                    engine.Move(movement.Joystick());
+                    engine.Move(movement.Joystick(), moveSpeed);
                     break;
                 default:
                     engine.Stop();
@@ -96,13 +96,13 @@ public class RSF_8605_Teleop extends RSF_BaseOp {
         }
 
         if (gamepad1.a) {
-            engine.SetSpeed(0.0d);
+            moveSpeed = 0.0d;
         }
         else if (gamepad1.b) {
-            engine.SetSpeed(1.0d);
+            moveSpeed = 1.0d;
         }
         else if (gamepad1.x) {
-            engine.SetSpeed(0.50d);
+            moveSpeed = 0.25d;
         }
     }
 

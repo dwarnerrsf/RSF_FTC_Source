@@ -104,6 +104,28 @@ public class RSF_EngineModule {
         SetPower(joysticks.Left(), joysticks.Left(), joysticks.Right(), joysticks.Right());
     }
 
+    public void Move(RSF_Joysticks joysticks, double maximum) {
+        double minimum = maximum * -1;
+        double left = joysticks.Left();
+        double right = joysticks.Right();
+
+        if (left > maximum) {
+            left = maximum;
+        }
+        else if (left < minimum) {
+            left = minimum;
+        }
+
+        if (right > maximum) {
+            right = maximum;
+        }
+        else if (right < minimum) {
+            right = minimum;
+        }
+
+        SetPower(left, left, right, right);
+    }
+
     private void SetPower(double frontLeft, double backLeft, double frontRight, double backRight) {
         motor_FrontLeft.setPower(frontLeft);
         motor_BackLeft.setPower(backLeft);

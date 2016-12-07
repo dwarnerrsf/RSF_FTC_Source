@@ -40,7 +40,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 @TeleOp(name="Pushbot: 8605 Auto 6", group="Pushbot")
 public class RSF_8605_Auto6 extends RSF_BaseOp {
     private final String VuforiaLicenseKey = "AZjwTlP/////AAAAGQ0Nw67MdEzAm0Cuvb+oJGOCSFyqWb6WplQDZyJo9vOTw0iLTPRXEXyjZ/WAN+V4wKPlbTv0pbPad2yBRZ3vyHl4hRafu7wJGLMgzfsTeozU4SzDgl378Q3zGZsJWK+UkfmekmXkzeysQqnkL0rZK+1KNaARZjbR14/OONP2j9AjqOoJa6yMMMN/2jgM5x/Lshv/++vTyHUzJYs7rEHh26FGDtlE9J8FoRXaNPrii2i3j2msG2bTO0AzrlwnK6AMtP92bqRGHnIvU4GQVnMgi2fn/EoxNRLiNktloDfdzv9vRaU3zgpOENxmqzkfdBskZzfy6EYGsEzMQPtJ07brBfDhC0l9w4kvuBi2i5dK7Mbo";
-    private int beaconIndex = 3;
+    private int beaconIndex = 0;
     private int stage = 0;
 
     private RSF_Beacon beacon = null;
@@ -59,6 +59,7 @@ public class RSF_8605_Auto6 extends RSF_BaseOp {
         collector.Initialize(hardwareMap, DcMotorSimple.Direction.REVERSE);
         color.Initialize(hardwareMap, true);
         deviceInterface.Initialize(hardwareMap, 5);
+        engine.Initialize(hardwareMap);
         engine.SetSpeed(0.0d);
         lift.Initialize(hardwareMap);
         vuforia.Initialize(RSF_States.TeamColor.Red, VuforiaLicenseKey);
