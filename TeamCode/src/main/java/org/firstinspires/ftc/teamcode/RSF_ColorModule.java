@@ -19,7 +19,7 @@ public class RSF_ColorModule {
         relativeLayout = ((Activity) hardwareMap.appContext).findViewById(com.qualcomm.ftcrobotcontroller.R.id.RelativeLayout);
     }
 
-    public RSF_States.SensorColor Dectect() {
+    public RSF_States.SensorColor Detect() {
         float hsvValues[] = {0F,0F,0F};
         final float values[] = hsvValues;
 

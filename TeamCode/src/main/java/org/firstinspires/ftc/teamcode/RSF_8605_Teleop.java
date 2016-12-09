@@ -80,7 +80,7 @@ public class RSF_8605_Teleop extends RSF_BaseOp {
             Player_One();
             Player_Two();
 
-            Update(40);
+            Update(5);
         }
     }
 
@@ -102,7 +102,7 @@ public class RSF_8605_Teleop extends RSF_BaseOp {
             moveSpeed = 1.0d;
         }
         else if (gamepad1.x) {
-            moveSpeed = 0.25d;
+            moveSpeed = 0.35d;
         }
     }
 
@@ -115,9 +115,11 @@ public class RSF_8605_Teleop extends RSF_BaseOp {
         }
 
         if (gamepad2.left_trigger > 0.0d) {
+            lift.SetActivePower(1.0d);
             lift.EnableReverse();
         }
         else if (gamepad2.right_trigger > 0.0d) {
+            lift.SetActivePower(1.0d);
             lift.EnableForward();
         }
         else {

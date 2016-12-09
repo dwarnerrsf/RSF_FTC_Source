@@ -11,6 +11,21 @@ public class RSF_EngineModule {
     private DcMotor motor_BackRight = null;
     private double motorSpeed = 0.0d;
 
+    public int GetEncoderPosition(RSF_States.EngineMotor motor) {
+        switch (motor) {
+            case FrontLeft:
+                return motor_FrontLeft.getCurrentPosition();
+            case BackLeft:
+                return motor_BackLeft.getCurrentPosition();
+            case FrontRight:
+                return motor_FrontRight.getCurrentPosition();
+            case BackRight:
+                return motor_BackRight.getCurrentPosition();
+            default:
+                return 0;
+        }
+    }
+
     public void Initialize(HardwareMap hardwareMap) {
         // Define and Initialize Motors
         motor_FrontLeft = hardwareMap.dcMotor.get("LF");
@@ -29,6 +44,40 @@ public class RSF_EngineModule {
         motor_BackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motor_FrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motor_BackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        // Set all the motors to zero power.
+        Stop();
+    }
+
+    public void Initialize(HardwareMap hardwareMap, RSF_States.Encoders encoders) {
+        // Define and Initialize Motors
+        motor_FrontLeft = hardwareMap.dcMotor.get("LF");
+        motor_BackLeft = hardwareMap.dcMotor.get("LB");
+        motor_FrontRight = hardwareMap.dcMotor.get("RF");
+        motor_BackRight = hardwareMap.dcMotor.get("RB");
+
+        // Set to REVERSE if using AndyMark motors
+        motor_FrontLeft.setDirection(DcMotor.Direction.FORWARD);
+        motor_BackLeft.setDirection(DcMotor.Direction.FORWARD);
+        motor_FrontRight.setDirection(DcMotor.Direction.REVERSE);
+        motor_BackRight.setDirection(DcMotor.Direction.REVERSE);
+
+        if (encoders == RSF_States.Encoders.On) {
+            motor_FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            motor_FrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            motor_BackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            motor_BackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            motor_FrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            motor_FrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            motor_BackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            motor_BackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+        else {
+            motor_FrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            motor_BackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            motor_FrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            motor_BackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
 
         // Set all the motors to zero power.
         Stop();

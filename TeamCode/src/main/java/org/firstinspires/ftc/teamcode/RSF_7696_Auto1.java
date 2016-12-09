@@ -34,6 +34,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 
 @TeleOp(name="Pushbot: 7696 Auto 1", group="Pushbot")
@@ -52,10 +53,13 @@ public class RSF_7696_Auto1 extends RSF_BaseOp {
 
     private double moveSpeed = 0.0d;
 
+    Servo leftPusher = null;
+    Servo rightPusher = null;
+
     @Override
     public void runOpMode() throws InterruptedException {
         collector.Initialize(hardwareMap, DcMotorSimple.Direction.REVERSE);
-        color.Initialize(hardwareMap, true);
+        color.Initialize(hardwareMap, false );
         deviceInterface.Initialize(hardwareMap, 5);
         engine.Initialize(hardwareMap);
         engine.SetSpeed(moveSpeed);
@@ -63,13 +67,19 @@ public class RSF_7696_Auto1 extends RSF_BaseOp {
         shooter.Initialize(hardwareMap);
         vuforia.Initialize(RSF_States.TeamColor.Red, VuforiaLicenseKey);
 
+        leftPusher = hardwareMap.servo.get("LEFTPUSH");
+        leftPusher.setPosition(0.0d);
+
+        rightPusher = hardwareMap.servo.get("RIGHTPUSH");
+        rightPusher.setPosition(0.0d);
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         resetStartTime();
 
         vuforia.Activate();
         stage = 1;
-        moveSpeed = 0.250d;
+        moveSpeed = 0.15d;
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
@@ -119,6 +129,12 @@ public class RSF_7696_Auto1 extends RSF_BaseOp {
                 break;
             case 8:
                 Stage_8();
+                break;
+            case 9:
+                Stage_9();
+                break;
+            case 10:
+                Stage_10();
                 break;
             default:
                 engine.Stop();
@@ -205,20 +221,59 @@ public class RSF_7696_Auto1 extends RSF_BaseOp {
     }
 
     public void Stage_8() {
-        if (hasCoordinates && x > -1300.0f) {
-            if (rotation < -3.0f) {
-                engine.Move(new RSF_Joysticks(0.40d, 0.10d));
-            }
-            else if (rotation > 3.0f) {
-                engine.Move(new RSF_Joysticks(0.10d, 0.40d));
-            }
-            else {
-                engine.Move(new RSF_Joysticks(0.25d, 0.25d));
+        if (x > -1375.0f) {
+            if (hasCoordinates) {
+                if (rotation < -3.0f) {
+                    engine.Move(new RSF_Joysticks(0.40d, 0.10d));
+                }
+                else if (rotation > 3.0f) {
+                    engine.Move(new RSF_Joysticks(0.10d, 0.40d));
+                }
+                else {
+                    engine.Move(new RSF_Joysticks(0.25d, 0.25d));
+                }
             }
         }
         else {
             stage = 10;
         }
+    }
+
+    public void Stage_9() {
+        if (hasCoordinates) {
+            if (y < -20.0f) {
+                engine.Move(RSF_States.DPad.Left, 0.80f);
+            }
+            else if (y > 20.0f) {
+                engine.Move(RSF_States.DPad.Right, 0.80f);
+            }
+            else {
+                resetStartTime();
+                engine.Stop();
+                stage = 10;
+            }
+        }
+    }
+
+    public void Stage_10() {
+        engine.Stop();
+        RSF_States.SensorColor beaconColor = color.Detect();
+        String _color = "";
+
+        if (beaconColor == RSF_States.SensorColor.Red) {
+            _color = "Red";
+            rightPusher.setPosition(0.75d);
+
+        }
+        else if (beaconColor == RSF_States.SensorColor.Blue) {
+            _color = "Blue";
+            leftPusher.setPosition(0.750d);
+        }
+        else {
+            _color = "None";
+        }
+
+        telemetry.addData("Color: ", _color);
     }
 }
 

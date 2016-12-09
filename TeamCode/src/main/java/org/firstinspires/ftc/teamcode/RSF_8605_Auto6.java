@@ -51,6 +51,7 @@ public class RSF_8605_Auto6 extends RSF_BaseOp {
     private float y = 0.0f;
     private float rotation = 0.0f;
 
+    private DcMotor pusher = null;
     private DcMotor shooter8605 = null;
     private int shooterPosition = 0;
 
@@ -63,6 +64,11 @@ public class RSF_8605_Auto6 extends RSF_BaseOp {
         engine.SetSpeed(0.0d);
         lift.Initialize(hardwareMap);
         vuforia.Initialize(RSF_States.TeamColor.Red, VuforiaLicenseKey);
+
+        pusher = hardwareMap.dcMotor.get("PUSH");
+        pusher.setDirection(DcMotor.Direction.FORWARD);
+        pusher.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        pusher.setPower(0.0d);
 
         shooter8605 = hardwareMap.dcMotor.get("SHOOT");
         shooter8605.setDirection(DcMotor.Direction.FORWARD);
@@ -223,18 +229,23 @@ public class RSF_8605_Auto6 extends RSF_BaseOp {
     }
 
     public void Stage_8() {
-        RSF_States.SensorColor beaconColor = color.Dectect();
+        engine.Stop();
+        RSF_States.SensorColor beaconColor = color.Detect();
+        String _color = "";
 
         if (beaconColor == RSF_States.SensorColor.Red) {
-            resetStartTime();
-
-            engine.SetSpeed(0.0d);
-            stage = 9;
+            _color = "Red";
+            pusher.setPower(-0.20d);
+        }
+        else if (beaconColor == RSF_States.SensorColor.Blue) {
+            _color = "Blue";
+            //pusher.setPower(0.05d);
         }
         else {
-            engine.SetSpeed(0.25d);
-            engine.Move(RSF_States.DPad.Up);
+            _color = "None";
         }
+
+        telemetry.addData("Color: ", _color);
     }
 }
 

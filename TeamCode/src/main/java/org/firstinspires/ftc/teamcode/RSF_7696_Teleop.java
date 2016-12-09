@@ -40,14 +40,16 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name="Pushbot: 7696 Teleop", group="Pushbot")
 public class RSF_7696_Teleop extends RSF_BaseOp {
-    private double moveSpeed = 0.0d;
-    Servo leftPusher = null;
-    Servo rightPusher = null;
+    private Servo leftPusher = null;
+    private Servo rightPusher = null;
 
-    double servoPosition = 0.0d;
+    private boolean isForward = true;
+    private double moveSpeed = 0.0d;
+    private double servoPosition = 0.0d;
 
     @Override
     public void runOpMode() throws InterruptedException {
+        isForward = true;
         moveSpeed = 1.0d;
 
         engine.Initialize(hardwareMap);
@@ -77,10 +79,10 @@ public class RSF_7696_Teleop extends RSF_BaseOp {
 
             switch (movement.MoveType()) {
                 case Dpad:
-                    engine.Move(movement.Dpad(), moveSpeed);
+                    engine.Move(movement.Dpad(), (isForward) ? moveSpeed : moveSpeed * -1);
                     break;
                 case Joystick:
-                    engine.Move(movement.Joystick(), moveSpeed);
+                    engine.Move(movement.Joystick(), (isForward) ? moveSpeed : moveSpeed * -1);
                     break;
                 default:
                     engine.Stop();
@@ -106,32 +108,39 @@ public class RSF_7696_Teleop extends RSF_BaseOp {
         }
 
         if (gamepad1.a) {
-            moveSpeed = 0.0d;
+            isForward = false;
         }
         else if (gamepad1.b) {
-            moveSpeed = 1.0d;
-        }
-        else if (gamepad1.x) {
-            moveSpeed = 0.50d;
+            isForward = true;
         }
     }
 
     private void Player_Two() {
-        if (gamepad2.b) {
+        if (gamepad2.right_trigger > 0.0d) {
             shooter.EnableForward();
         }
         else {
             shooter.Disable();
         }
 
-        if (gamepad2.left_trigger > 0.0d) {
+        if (gamepad2.y) {
             lift.EnableForward();
         }
-        else if (gamepad2.right_trigger > 0.0d) {
+        else if (gamepad2.a) {
             lift.EnableReverse();
         }
         else {
             lift.Disable();
+        }
+
+        if (gamepad2.left_bumper) {
+            collector.EnableReverse();
+        }
+        else if (gamepad2.left_bumper) {
+            collector.EnableForward();
+        }
+        else {
+            collector.Disable();
         }
 
         if (gamepad2.dpad_left) {

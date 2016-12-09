@@ -1,7 +1,7 @@
 #Internal package file, do not edit.
-#Tue Dec 06 20:24:18 PST 2016
+#Thu Dec 08 19:07:31 PST 2016
 14.set=DEX
-180.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/raw/texture_fragment_shader.glsl
+180.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/raw/chimeconnect.wav
 118.set=ANDROID_RESOURCE
 60.set=ASSET
 2.set=DEX
@@ -59,7 +59,7 @@
 154.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/assets/debug/images/ftcDeviceInterfaceModule.png
 167.set=ANDROID_RESOURCE
 24.set=ASSET
-181.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/raw/chimeconnect.wav
+181.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/raw/texture_fragment_shader.glsl
 128.set=ASSET
 70.set=DEX
 27.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/layout/activity_config_wifi_direct.xml
