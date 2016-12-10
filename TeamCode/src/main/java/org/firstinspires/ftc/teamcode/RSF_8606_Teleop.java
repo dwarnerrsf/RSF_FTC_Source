@@ -89,7 +89,15 @@ public class RSF_8606_Teleop extends RSF_BaseOp {
     }
 
     private void Controller_One() {
-
+        if (gamepad1.a) {
+            moveSpeed = 0.0d;
+        }
+        else if (gamepad1.b) {
+            moveSpeed = 1.0d;
+        }
+        else if (gamepad1.x) {
+            moveSpeed = 0.30d;
+        }
     }
 
     private void Controller_Two() {

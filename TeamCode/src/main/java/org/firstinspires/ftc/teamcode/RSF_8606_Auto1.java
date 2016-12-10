@@ -113,7 +113,7 @@ public class RSF_8606_Auto1 extends RSF_BaseOp {
             case 1:
                 Stage_1();
                 break;
-            case 2:
+            /*case 2:
                 Stage_2();
                 break;
             case 3:
@@ -142,16 +142,18 @@ public class RSF_8606_Auto1 extends RSF_BaseOp {
                 break;
             case 11:
                 Stage_11();
-                break;
+                break;*/
             default:
+                telemetry.addData("Hello World: ", "Default");
                 engine.Stop();
                 break;
         }
     }
 
     public void Stage_1() {
-        if (time < 0.80d) {
-            engine.Move(RSF_States.DPad.Down, moveSpeed);
+        if (time < 4.0d) {
+            telemetry.addData("Hello World: ", "1");
+            engine.Move(RSF_States.DPad.UpLeft, 1.0d);
         } else {
             resetStartTime();
             engine.Stop();

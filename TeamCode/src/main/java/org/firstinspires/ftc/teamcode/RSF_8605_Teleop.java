@@ -102,7 +102,7 @@ public class RSF_8605_Teleop extends RSF_BaseOp {
             moveSpeed = 1.0d;
         }
         else if (gamepad1.x) {
-            moveSpeed = 0.35d;
+            moveSpeed = 0.25d;
         }
     }
 

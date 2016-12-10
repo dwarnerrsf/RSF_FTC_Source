@@ -142,8 +142,12 @@ public class RSF_7696_Auto2 extends RSF_BaseOp {
                 break;
             case 11:
                 Stage_11();
+                break;
             case 12:
                 Stage_12();
+                break;
+            case 13:
+                Stage_13();
                 break;
             default:
                 engine.Stop();
@@ -172,7 +176,7 @@ public class RSF_7696_Auto2 extends RSF_BaseOp {
     }
 
     public void Stage_3() {
-        if (time < 1.50d) {
+        if (time < 2.50d) {
             engine.Move(RSF_States.DPad.Left, moveSpeed);
         } else {
             resetStartTime();
@@ -255,17 +259,7 @@ public class RSF_7696_Auto2 extends RSF_BaseOp {
 
     public void Stage_10() {
         if (x > -1200.0f) {
-            if (hasCoordinates) {
-                if (rotation < -3.0f) {
-                    engine.Move(new RSF_Joysticks(-0.20d, -0.05d), 0.20d);
-                }
-                else if (rotation > 3.0f) {
-                    engine.Move(new RSF_Joysticks(-0.05d, -0.20d), 0.20d);
-                }
-                else {
-                    engine.Move(new RSF_Joysticks(-0.15d, -0.15d), 0.15d);
-                }
-            }
+            engine.Move(new RSF_Joysticks(-0.15d, -0.15d), 0.15d);
         }
         else {
             resetStartTime();
@@ -274,13 +268,14 @@ public class RSF_7696_Auto2 extends RSF_BaseOp {
         }
     }
 
-    public void Stage_11() {
+    public void Stage_11()
+    {
         if (hasCoordinates) {
-            if (y < -20.0f) {
-                engine.Move(RSF_States.DPad.Right, 0.80f);
+            if (rotation < -3.0f) {
+                engine.Move(new RSF_Joysticks(0.20d, -0.20d), 0.20d);
             }
-            else if (y > 20.0f) {
-                engine.Move(RSF_States.DPad.Left, 0.80f);
+            else if (rotation > 3.0f) {
+                engine.Move(new RSF_Joysticks(-0.20d, 0.20d), 0.20d);
             }
             else {
                 resetStartTime();
@@ -291,6 +286,22 @@ public class RSF_7696_Auto2 extends RSF_BaseOp {
     }
 
     public void Stage_12() {
+        if (hasCoordinates) {
+            if (y < -20.0f) {
+                engine.Move(RSF_States.DPad.Right, 0.80f);
+            }
+            else if (y > 20.0f) {
+                engine.Move(RSF_States.DPad.Left, 0.80f);
+            }
+            else {
+                resetStartTime();
+                engine.Stop();
+                stage = 13;
+            }
+        }
+    }
+
+    public void Stage_13() {
         engine.Stop();
         RSF_States.SensorColor beaconColor = color.Detect();
         String _color = "";
