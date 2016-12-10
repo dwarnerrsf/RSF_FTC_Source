@@ -140,6 +140,11 @@ public class RSF_7696_Auto2 extends RSF_BaseOp {
             case 10:
                 Stage_10();
                 break;
+            case 11:
+                Stage_11();
+            case 12:
+                Stage_12();
+                break;
             default:
                 engine.Stop();
                 break;
@@ -147,8 +152,8 @@ public class RSF_7696_Auto2 extends RSF_BaseOp {
     }
 
     public void Stage_1() {
-        if (time < 1.15d) {
-            engine.Move(RSF_States.DPad.Up, moveSpeed);
+        if (time < 0.80d) {
+            engine.Move(RSF_States.DPad.Down, moveSpeed);
         } else {
             resetStartTime();
             engine.Stop();
@@ -167,9 +172,8 @@ public class RSF_7696_Auto2 extends RSF_BaseOp {
     }
 
     public void Stage_3() {
-        if (time < 0.50d) {
-            moveSpeed = 1.0d;
-            engine.Move(new RSF_Joysticks(1.0d, -1.0d), moveSpeed);
+        if (time < 1.50d) {
+            engine.Move(RSF_States.DPad.Left, moveSpeed);
         } else {
             resetStartTime();
             engine.Stop();
@@ -178,9 +182,11 @@ public class RSF_7696_Auto2 extends RSF_BaseOp {
     }
 
     public void Stage_4() {
-        if (time < 1.30d) {
-            engine.Move(RSF_States.DPad.Up, moveSpeed);
-        } else {
+        if (time < 0.60d) {
+            moveSpeed = 1.0d;
+            engine.Move(new RSF_Joysticks(1.0d, -1.0d), moveSpeed);
+        }
+        else {
             resetStartTime();
             engine.Stop();
             stage = 5;
@@ -188,8 +194,8 @@ public class RSF_7696_Auto2 extends RSF_BaseOp {
     }
 
     public void Stage_5() {
-        if (time < 0.50d) {
-            engine.Move(new RSF_Joysticks(1.0d, -1.0d), moveSpeed);
+        if (time < 1.20d) {
+            engine.Move(RSF_States.DPad.Down, moveSpeed);
         } else {
             resetStartTime();
             engine.Stop();
@@ -198,8 +204,9 @@ public class RSF_7696_Auto2 extends RSF_BaseOp {
     }
 
     public void Stage_6() {
-        if (!hasCoordinates) {
-            engine.Stop();
+        if (time < 0.55d) {
+            moveSpeed = 1.0d;
+            engine.Move(new RSF_Joysticks(1.0d, -1.0d), moveSpeed);
         }
         else {
             resetStartTime();
@@ -209,47 +216,34 @@ public class RSF_7696_Auto2 extends RSF_BaseOp {
     }
 
     public void Stage_7() {
-        if (hasCoordinates) {
-            if (y < -20.0f) {
-                engine.Move(RSF_States.DPad.Left, 0.80f);
-            }
-            else if (y > 20.0f) {
-                engine.Move(RSF_States.DPad.Right, 0.80f);
-            }
-            else {
-                resetStartTime();
-                engine.Stop();
-                stage = 8;
-            }
+        if (time < 0.85d) {
+            engine.Move(RSF_States.DPad.Right, moveSpeed);
+        }
+        else {
+            resetStartTime();
+            engine.Stop();
+            stage = 8;
         }
     }
 
     public void Stage_8() {
-        if (x > -1375.0f) {
-            if (hasCoordinates) {
-                if (rotation < -3.0f) {
-                    engine.Move(new RSF_Joysticks(0.40d, 0.10d));
-                }
-                else if (rotation > 3.0f) {
-                    engine.Move(new RSF_Joysticks(0.10d, 0.40d));
-                }
-                else {
-                    engine.Move(new RSF_Joysticks(0.25d, 0.25d));
-                }
-            }
+        if (!hasCoordinates) {
+            engine.Stop();
         }
         else {
-            stage = 10;
+            resetStartTime();
+            engine.Stop();
+            stage = 9;
         }
     }
 
     public void Stage_9() {
         if (hasCoordinates) {
             if (y < -20.0f) {
-                engine.Move(RSF_States.DPad.Left, 0.80f);
+                engine.Move(RSF_States.DPad.Right, 0.80f);
             }
             else if (y > 20.0f) {
-                engine.Move(RSF_States.DPad.Right, 0.80f);
+                engine.Move(RSF_States.DPad.Left, 0.80f);
             }
             else {
                 resetStartTime();
@@ -260,18 +254,54 @@ public class RSF_7696_Auto2 extends RSF_BaseOp {
     }
 
     public void Stage_10() {
+        if (x > -1200.0f) {
+            if (hasCoordinates) {
+                if (rotation < -3.0f) {
+                    engine.Move(new RSF_Joysticks(-0.20d, -0.05d), 0.20d);
+                }
+                else if (rotation > 3.0f) {
+                    engine.Move(new RSF_Joysticks(-0.05d, -0.20d), 0.20d);
+                }
+                else {
+                    engine.Move(new RSF_Joysticks(-0.15d, -0.15d), 0.15d);
+                }
+            }
+        }
+        else {
+            resetStartTime();
+            engine.Stop();
+            stage = 11;
+        }
+    }
+
+    public void Stage_11() {
+        if (hasCoordinates) {
+            if (y < -20.0f) {
+                engine.Move(RSF_States.DPad.Right, 0.80f);
+            }
+            else if (y > 20.0f) {
+                engine.Move(RSF_States.DPad.Left, 0.80f);
+            }
+            else {
+                resetStartTime();
+                engine.Stop();
+                stage = 12;
+            }
+        }
+    }
+
+    public void Stage_12() {
         engine.Stop();
         RSF_States.SensorColor beaconColor = color.Detect();
         String _color = "";
 
         if (beaconColor == RSF_States.SensorColor.Red) {
             _color = "Red";
-            rightPusher.setPosition(0.75d);
-
+            leftPusher.setPosition(0.750d);
         }
         else if (beaconColor == RSF_States.SensorColor.Blue) {
             _color = "Blue";
-            leftPusher.setPosition(0.750d);
+            rightPusher.setPosition(0.75d);
         }
         else {
             _color = "None";

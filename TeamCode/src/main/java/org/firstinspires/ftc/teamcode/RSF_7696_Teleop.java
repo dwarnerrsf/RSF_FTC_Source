@@ -89,15 +89,22 @@ public class RSF_7696_Teleop extends RSF_BaseOp {
                     break;
             }
 
-            Player_One();
-            Player_Two();
+            Controller_Joint();
+            Controller_One();
+            Controller_Two();
 
             Update(5);
         }
     }
 
-    private void Player_One() {
-        if (gamepad1.left_trigger > 0.0d) {
+    private void Controller_Joint() {
+        if (gamepad2.left_bumper) {
+            collector.EnableReverse();
+        }
+        else if (gamepad2.right_bumper) {
+            collector.EnableForward();
+        }
+        else if (gamepad1.left_trigger > 0.0d) {
             collector.EnableReverse();
         }
         else if (gamepad1.right_trigger > 0.0d) {
@@ -106,7 +113,9 @@ public class RSF_7696_Teleop extends RSF_BaseOp {
         else {
             collector.Disable();
         }
+    }
 
+    private void Controller_One() {
         if (gamepad1.a) {
             isForward = false;
         }
@@ -115,7 +124,7 @@ public class RSF_7696_Teleop extends RSF_BaseOp {
         }
     }
 
-    private void Player_Two() {
+    private void Controller_Two() {
         if (gamepad2.right_trigger > 0.0d) {
             shooter.EnableForward();
         }
@@ -131,16 +140,6 @@ public class RSF_7696_Teleop extends RSF_BaseOp {
         }
         else {
             lift.Disable();
-        }
-
-        if (gamepad2.left_bumper) {
-            collector.EnableReverse();
-        }
-        else if (gamepad2.left_bumper) {
-            collector.EnableForward();
-        }
-        else {
-            collector.Disable();
         }
 
         if (gamepad2.dpad_left) {
