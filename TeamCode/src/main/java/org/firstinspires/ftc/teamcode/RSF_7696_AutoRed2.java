@@ -99,10 +99,6 @@ public class RSF_7696_AutoRed2 extends RSF_BaseOp {
             telemetry.addData("Rotation: ", hasCoordinates ? rotation : "None");
             telemetry.addData("Stage: ", stage);
             telemetry.addData("Time: ", time);
-            telemetry.addData("Encoder LF: ", engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft));
-            telemetry.addData("Encoder LB: ", engine.GetEncoderPosition(RSF_States.EngineMotor.BackLeft));
-            telemetry.addData("Encoder RF: ", engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight));
-            telemetry.addData("Encoder RB: ", engine.GetEncoderPosition(RSF_States.EngineMotor.BackRight));
 
             Update(40);
         }

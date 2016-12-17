@@ -9,21 +9,40 @@ public class RSF_EngineModule {
     private DcMotor motor_BackLeft = null;
     private DcMotor motor_FrontRight = null;
     private DcMotor motor_BackRight = null;
+    private RSF_States.Encoders encoders = RSF_States.Encoders.Off;
     private double motorSpeed = 0.0d;
 
+    public int GetAverageEncoderPosition() {
+        int value = GetEncoderPosition(RSF_States.EngineMotor.FrontLeft);
+        value += GetEncoderPosition(RSF_States.EngineMotor.BackLeft);
+        value += GetEncoderPosition(RSF_States.EngineMotor.FrontRight);
+        value += GetEncoderPosition(RSF_States.EngineMotor.BackRight);
+
+        return (value / 4) - 10;
+    }
+
     public int GetEncoderPosition(RSF_States.EngineMotor motor) {
-        switch (motor) {
-            case FrontLeft:
-                return motor_FrontLeft.getCurrentPosition();
-            case BackLeft:
-                return motor_BackLeft.getCurrentPosition();
-            case FrontRight:
-                return motor_FrontRight.getCurrentPosition();
-            case BackRight:
-                return motor_BackRight.getCurrentPosition();
-            default:
-                return 0;
+        if (encoders == RSF_States.Encoders.On) {
+            switch (motor) {
+                case FrontLeft:
+                    return motor_FrontLeft.getCurrentPosition();
+                case BackLeft:
+                    return motor_BackLeft.getCurrentPosition();
+                case FrontRight:
+                    return motor_FrontRight.getCurrentPosition();
+                case BackRight:
+                    return motor_BackRight.getCurrentPosition();
+                default:
+                    return 0;
+            }
         }
+        else {
+            return 0;
+        }
+    }
+
+    public boolean HasEncoders() {
+        return (encoders == RSF_States.Encoders.On) ? true : false;
     }
 
     public void Initialize(HardwareMap hardwareMap) {
@@ -49,7 +68,7 @@ public class RSF_EngineModule {
         Stop();
     }
 
-    public void Initialize(HardwareMap hardwareMap, RSF_States.Encoders encoders) {
+    public void Initialize(HardwareMap hardwareMap, RSF_States.Encoders encoderMode) {
         // Define and Initialize Motors
         motor_FrontLeft = hardwareMap.dcMotor.get("LF");
         motor_BackLeft = hardwareMap.dcMotor.get("LB");
@@ -62,14 +81,12 @@ public class RSF_EngineModule {
         motor_FrontRight.setDirection(DcMotor.Direction.REVERSE);
         motor_BackRight.setDirection(DcMotor.Direction.REVERSE);
 
-        if (encoders == RSF_States.Encoders.On) {
-            motor_FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        if (encoderMode == RSF_States.Encoders.On) {
+            ResetEncoders();
+
             motor_FrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            motor_BackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             motor_BackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            motor_FrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             motor_FrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            motor_BackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             motor_BackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
         else {
@@ -78,6 +95,8 @@ public class RSF_EngineModule {
             motor_FrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             motor_BackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
+
+        encoders = encoderMode;
 
         // Set all the motors to zero power.
         Stop();
@@ -173,6 +192,27 @@ public class RSF_EngineModule {
         }
 
         SetPower(left, left, right, right);
+    }
+
+    public void MoveTo(int rotations) {
+        motor_FrontLeft.setTargetPosition(rotations);
+        motor_BackLeft.setTargetPosition(rotations);
+        motor_FrontRight.setTargetPosition(rotations);
+        motor_BackRight.setTargetPosition(rotations);
+
+        motor_FrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motor_BackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motor_FrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        motor_BackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        SetPower(motorSpeed, motorSpeed, motorSpeed, motorSpeed);
+    }
+
+    public void ResetEncoders() {
+        motor_FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor_BackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor_FrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor_BackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     private void SetPower(double frontLeft, double backLeft, double frontRight, double backRight) {

@@ -52,7 +52,7 @@ public class RSF_7696_Teleop extends RSF_BaseOp {
         isForward = true;
         moveSpeed = 1.0d;
 
-        engine.Initialize(hardwareMap);
+        engine.Initialize(hardwareMap, RSF_States.Encoders.On);
         engine.SetSpeed(moveSpeed);
 
         collector.Initialize(hardwareMap, DcMotor.Direction.REVERSE);

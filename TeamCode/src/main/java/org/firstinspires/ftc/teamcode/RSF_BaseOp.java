@@ -58,6 +58,13 @@ public class RSF_BaseOp extends LinearOpMode {
     }
 
     protected void Update(long time) throws InterruptedException {
+        if (engine.HasEncoders()) {
+            telemetry.addData("Encoder LF: ", engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft));
+            telemetry.addData("Encoder LB: ", engine.GetEncoderPosition(RSF_States.EngineMotor.BackLeft));
+            telemetry.addData("Encoder RF: ", engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight));
+            telemetry.addData("Encoder RB: ", engine.GetEncoderPosition(RSF_States.EngineMotor.BackRight));
+        }
+
         telemetry.update();
         WaitForTick(time);
     }
