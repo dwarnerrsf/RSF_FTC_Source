@@ -83,17 +83,10 @@ public class RSF_EngineModule {
 
         if (encoderMode == RSF_States.Encoders.On) {
             ResetEncoders();
-
-            motor_FrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            motor_BackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            motor_FrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            motor_BackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            SetMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
         else {
-            motor_FrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            motor_BackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            motor_FrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            motor_BackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            SetMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
         encoders = encoderMode;
@@ -103,6 +96,8 @@ public class RSF_EngineModule {
     }
 
     public void Move(RSF_States.DPad dpad) {
+        SetMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         switch (dpad) {
             case Down:
                 SetPower(-motorSpeed, -motorSpeed, -motorSpeed, -motorSpeed);
@@ -136,6 +131,7 @@ public class RSF_EngineModule {
 
     public void Move(RSF_States.DPad dpad, double speed) {
         motorSpeed = speed;
+        SetMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         switch (dpad) {
             case Down:
@@ -169,6 +165,7 @@ public class RSF_EngineModule {
     }
 
     public void Move(RSF_Joysticks joysticks) {
+        SetMode(DcMotor.RunMode.RUN_USING_ENCODER);
         SetPower(joysticks.Left(), joysticks.Left(), joysticks.Right(), joysticks.Right());
     }
 
@@ -191,6 +188,7 @@ public class RSF_EngineModule {
             right = minimum;
         }
 
+        SetMode(DcMotor.RunMode.RUN_USING_ENCODER);
         SetPower(left, left, right, right);
     }
 
@@ -200,19 +198,19 @@ public class RSF_EngineModule {
         motor_FrontRight.setTargetPosition(rotations);
         motor_BackRight.setTargetPosition(rotations);
 
-        motor_FrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motor_BackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motor_FrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motor_BackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
+        SetMode(DcMotor.RunMode.RUN_TO_POSITION);
         SetPower(motorSpeed, motorSpeed, motorSpeed, motorSpeed);
     }
 
     public void ResetEncoders() {
-        motor_FrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motor_BackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motor_FrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motor_BackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        SetMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+    private void SetMode(DcMotor.RunMode runMode) {
+        motor_FrontLeft.setMode(runMode);
+        motor_BackLeft.setMode(runMode);
+        motor_FrontRight.setMode(runMode);
+        motor_BackRight.setMode(runMode);
     }
 
     private void SetPower(double frontLeft, double backLeft, double frontRight, double backRight) {
@@ -238,7 +236,8 @@ public class RSF_EngineModule {
         SetPower(0.0d, 0.0d, 0.0d, 0.0d);
     }
 
-    public double TestPower() {
-        return motorSpeed;
+    public void TestTurn() {
+        SetMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        SetPower(0.0, 0.0d, -1.0d, -1.0d);
     }
 }

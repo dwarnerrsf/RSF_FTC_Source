@@ -19,6 +19,13 @@ public class RSF_ColorModule {
         relativeLayout = ((Activity) hardwareMap.appContext).findViewById(com.qualcomm.ftcrobotcontroller.R.id.RelativeLayout);
     }
 
+    protected void Initialize(HardwareMap hardwareMap, String sensorName, boolean enableLight) {
+        sensor = hardwareMap.colorSensor.get(sensorName);
+        sensor.enableLed(enableLight);
+
+        relativeLayout = ((Activity) hardwareMap.appContext).findViewById(com.qualcomm.ftcrobotcontroller.R.id.RelativeLayout);
+    }
+
     public RSF_States.SensorColor Detect() {
         float hsvValues[] = {0F,0F,0F};
         final float values[] = hsvValues;
@@ -45,5 +52,25 @@ public class RSF_ColorModule {
         });
 
         return sensorColor;
+    }
+
+    public int Detect(String color) {
+        float hsvValues[] = {0F,0F,0F};
+        final float values[] = hsvValues;
+
+        int red = sensor.red();
+        int green = sensor.green();
+        int blue = sensor.blue();
+
+        switch (color) {
+            case "Red":
+                return red;
+            case "Green":
+                return green;
+            case "Blue":
+                return blue;
+            default:
+                return 0;
+        }
     }
 }
