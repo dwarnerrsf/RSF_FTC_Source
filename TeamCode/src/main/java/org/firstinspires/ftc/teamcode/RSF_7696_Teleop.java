@@ -47,10 +47,15 @@ public class RSF_7696_Teleop extends RSF_BaseOp {
     private double moveSpeed = 0.0d;
     private double servoPosition = 0.0d;
 
+    private DcMotor lift_1 = null;
+    private DcMotor lift_2 = null;
+
+    private double speedModifier = 1.0d;
+
     @Override
     public void runOpMode() throws InterruptedException {
         isForward = true;
-        moveSpeed = 1.0d;
+        moveSpeed = 0.0d;
 
         engine.Initialize(hardwareMap, RSF_States.Encoders.On);
         engine.SetSpeed(moveSpeed);
@@ -58,8 +63,14 @@ public class RSF_7696_Teleop extends RSF_BaseOp {
         collector.Initialize(hardwareMap, DcMotor.Direction.REVERSE);
         collector.SetActivePower(1.0d);
 
-        lift.Initialize(hardwareMap);
-        lift.SetActivePower(1.0d);
+        lift_1 = hardwareMap.dcMotor.get("LIFT1");
+        lift_1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lift_1.setPower(0.0d);
+
+        lift_2 = hardwareMap.dcMotor.get("LIFT2");
+        lift_2.setDirection(DcMotorSimple.Direction.REVERSE);
+        lift_2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lift_2.setPower(0.0d);
 
         shooter.Initialize(hardwareMap);
         shooter.SetActivePower(1.0d);
@@ -79,10 +90,13 @@ public class RSF_7696_Teleop extends RSF_BaseOp {
 
             switch (movement.MoveType()) {
                 case Dpad:
-                    engine.Move(movement.Dpad(), (isForward) ? moveSpeed : moveSpeed * -1);
+                    //engine.Move(movement.Dpad(), (isForward) ? moveSpeed : moveSpeed * -1);
+                    engine.Move(movement.Dpad(), ((isForward) ? 1 : -1) * speedModifier);
                     break;
                 case Joystick:
-                    engine.Move(movement.Joystick(), (isForward) ? moveSpeed : moveSpeed * -1);
+                    double left = (movement.Joystick().Left() * ((isForward) ? 1 : -1) * speedModifier);
+                    double right = (movement.Joystick().Right() * ((isForward) ? 1 : -1) * speedModifier);
+                    engine.SetPower(left, left, right, right);
                     break;
                 default:
                     engine.Stop();
@@ -92,6 +106,8 @@ public class RSF_7696_Teleop extends RSF_BaseOp {
             Controller_Joint();
             Controller_One();
             Controller_Two();
+
+            telemetry.addData("Forward", (isForward) ? "True" : "False");
 
             Update(5);
         }
@@ -122,6 +138,12 @@ public class RSF_7696_Teleop extends RSF_BaseOp {
         else if (gamepad1.b) {
             isForward = true;
         }
+        else if (gamepad1.x) {
+            speedModifier = 1.0d;
+        }
+        else if (gamepad1.y) {
+            speedModifier = 0.27d;
+        }
     }
 
     private void Controller_Two() {
@@ -133,13 +155,16 @@ public class RSF_7696_Teleop extends RSF_BaseOp {
         }
 
         if (gamepad2.y) {
-            lift.EnableForward();
+            lift_1.setPower(1.0d);
+            lift_2.setPower(1.0d);
         }
         else if (gamepad2.a) {
-            lift.EnableReverse();
+            lift_1.setPower(-1.0d);
+            lift_2.setPower(-1.0d);
         }
         else {
-            lift.Disable();
+            lift_1.setPower(0.0d);
+            lift_2.setPower(0.0d);
         }
 
         if (gamepad2.dpad_left) {

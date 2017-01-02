@@ -213,7 +213,7 @@ public class RSF_EngineModule {
         motor_BackRight.setMode(runMode);
     }
 
-    private void SetPower(double frontLeft, double backLeft, double frontRight, double backRight) {
+    public void SetPower(double frontLeft, double backLeft, double frontRight, double backRight) {
         motor_FrontLeft.setPower(frontLeft);
         motor_BackLeft.setPower(backLeft);
         motor_FrontRight.setPower(frontRight);
@@ -239,5 +239,10 @@ public class RSF_EngineModule {
     public void TestTurn() {
         SetMode(DcMotor.RunMode.RUN_USING_ENCODER);
         SetPower(0.0, 0.0d, -1.0d, -1.0d);
+    }
+
+    public void LeftTurn() {
+        SetMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        SetPower(-1.0, -1.0d, 0.0d, 0.0d);
     }
 }
