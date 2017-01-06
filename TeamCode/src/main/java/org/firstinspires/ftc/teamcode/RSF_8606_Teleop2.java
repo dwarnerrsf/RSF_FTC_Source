@@ -46,6 +46,9 @@ public class RSF_8606_Teleop2 extends RSF_BaseOp {
     private DcMotor shoot_1 = null;
     private DcMotor shoot_2 = null;
 
+    private Servo flap = null;
+    private Servo trigger = null;
+
     @Override
     public void runOpMode() throws InterruptedException {
         speedModifier = 1.0d;
@@ -66,6 +69,12 @@ public class RSF_8606_Teleop2 extends RSF_BaseOp {
         shoot_2 = hardwareMap.dcMotor.get("SHOOT2");
         shoot_2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         shoot_2.setPower(0.0d);
+
+        flap = hardwareMap.servo.get("FLAP");
+        flap.setPosition(0.0d);
+
+        trigger = hardwareMap.servo.get("TRIGGER");
+        trigger.setPosition(0.0d);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -115,6 +124,13 @@ public class RSF_8606_Teleop2 extends RSF_BaseOp {
         else {
             collector.Disable();
         }
+
+        if (gamepad1.right_bumper) {
+            flap.setPosition(0.9375d);
+        }
+        else if (gamepad1.left_bumper) {
+            flap.setPosition(0.0d);
+        }
     }
 
     private void Controller_Two() {
@@ -129,12 +145,19 @@ public class RSF_8606_Teleop2 extends RSF_BaseOp {
         }
 
         if (gamepad2.right_trigger > 0) {
-            shoot_1.setPower(-1.0d);
-            shoot_2.setPower(-1.0d);
+            shoot_1.setPower(-0.25d);
+            shoot_2.setPower(-0.25d);
         }
         else {
             shoot_1.setPower(0.0d);
             shoot_2.setPower(0.0d);
+        }
+
+        if (gamepad2.left_trigger > 0) {
+            trigger.setPosition(0.375d);
+        }
+        else {
+            trigger.setPosition(0.0d);
         }
     }
 }

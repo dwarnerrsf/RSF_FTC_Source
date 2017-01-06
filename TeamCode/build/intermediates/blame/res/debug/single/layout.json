@@ -16,12 +16,12 @@
         "source": "/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/exploded-aar/FtcCommon-release/res/layout/digital_devices.xml"
     },
     {
-        "merged": "/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/merged/debug/layout/device_interface_module.xml",
-        "source": "/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/exploded-aar/FtcCommon-release/res/layout/device_interface_module.xml"
-    },
-    {
         "merged": "/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/merged/debug/layout/servo_list.xml",
         "source": "/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/exploded-aar/FtcCommon-release/res/layout/servo_list.xml"
+    },
+    {
+        "merged": "/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/merged/debug/layout/device_interface_module.xml",
+        "source": "/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/exploded-aar/FtcCommon-release/res/layout/device_interface_module.xml"
     },
     {
         "merged": "/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/merged/debug/layout/red_line.xml",
