@@ -206,6 +206,10 @@ public class RSF_EngineModule {
         SetMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
+    public void SetEngineMode(RSF_States.Encoders mode) {
+        encoders = mode;
+    }
+
     private void SetMode(DcMotor.RunMode runMode) {
         motor_FrontLeft.setMode(runMode);
         motor_BackLeft.setMode(runMode);

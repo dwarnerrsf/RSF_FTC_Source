@@ -392,7 +392,7 @@ public class RSF_7696_AutoBlue9 extends RSF_BaseOp {
             resetStartTime();
             engine.ResetEncoders();
             engine.Stop();
-            stage = 14;
+            stage = 50;
         }
     }
 
