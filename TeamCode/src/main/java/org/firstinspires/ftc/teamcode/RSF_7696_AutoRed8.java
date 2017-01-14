@@ -69,11 +69,14 @@ public class RSF_7696_AutoRed8 extends RSF_BaseOp {
         engine.Initialize(hardwareMap, RSF_States.Encoders.On);
         engine.SetSpeed(moveSpeed);
         shooter.Initialize(hardwareMap);
+        shooter.SetActivePower(1.0d);
 
         leftPusher = hardwareMap.servo.get("LEFTPUSH");
+        leftPusher.setDirection(Servo.Direction.REVERSE);
         leftPusher.setPosition(0.0d);
 
         rightPusher = hardwareMap.servo.get("RIGHTPUSH");
+        rightPusher.setDirection(Servo.Direction.REVERSE);
         rightPusher.setPosition(0.0d);
 
         odsFront = hardwareMap.opticalDistanceSensor.get("ODSFRONT");
@@ -327,13 +330,15 @@ public class RSF_7696_AutoRed8 extends RSF_BaseOp {
 
             if (results == RSF_States.SensorColor.Blue) {
                 if (!pusherEnabled) {
-                    rightPusher.setPosition(0.30d);
+                    leftPusher.setPosition(0.60d);
+                    rightPusher.setPosition(0.0d);
                     pusherEnabled = true;
                 }
             }
             else if (results == RSF_States.SensorColor.Red) {
                 if (!pusherEnabled) {
-                    leftPusher.setPosition(0.30d);
+                    leftPusher.setPosition(0.0d);
+                    rightPusher.setPosition(0.60d);
                     pusherEnabled = true;
                 }
             }
@@ -485,13 +490,15 @@ public class RSF_7696_AutoRed8 extends RSF_BaseOp {
 
             if (results == RSF_States.SensorColor.Blue) {
                 if (!pusherEnabled) {
-                    rightPusher.setPosition(0.40d);
+                    leftPusher.setPosition(0.60d);
+                    rightPusher.setPosition(0.0d);
                     pusherEnabled = true;
                 }
             }
             else if (results == RSF_States.SensorColor.Red) {
                 if (!pusherEnabled) {
-                    leftPusher.setPosition(0.40d);
+                    leftPusher.setPosition(0.00d);
+                    rightPusher.setPosition(0.40d);
                     pusherEnabled = true;
                 }
             }

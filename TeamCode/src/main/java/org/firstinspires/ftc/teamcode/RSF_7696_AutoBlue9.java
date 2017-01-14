@@ -69,11 +69,14 @@ public class RSF_7696_AutoBlue9 extends RSF_BaseOp {
         engine.Initialize(hardwareMap, RSF_States.Encoders.On);
         engine.SetSpeed(moveSpeed);
         shooter.Initialize(hardwareMap);
+        shooter.SetActivePower(1.0d);
 
         leftPusher = hardwareMap.servo.get("LEFTPUSH");
+        leftPusher.setDirection(Servo.Direction.REVERSE);
         leftPusher.setPosition(0.0d);
 
         rightPusher = hardwareMap.servo.get("RIGHTPUSH");
+        rightPusher.setDirection(Servo.Direction.REVERSE);
         rightPusher.setPosition(0.0d);
 
         odsFront = hardwareMap.opticalDistanceSensor.get("ODSFRONT");
@@ -224,7 +227,7 @@ public class RSF_7696_AutoBlue9 extends RSF_BaseOp {
     }
 
     public void Stage_3() {
-        int target = -(int)(Full_Rotation * 3.5f);
+        int target = -(int)(Full_Rotation * 3.32f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) > target) {
             engine.SetSpeed(0.50d);
@@ -242,7 +245,7 @@ public class RSF_7696_AutoBlue9 extends RSF_BaseOp {
     }
 
     public void Stage_4() {
-        int target = -(int)(Full_Rotation * 0.75f);
+        int target = -(int)(Full_Rotation * 1.0f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight) > target) {
             engine.SetSpeed(0.50d);
@@ -348,13 +351,15 @@ public class RSF_7696_AutoBlue9 extends RSF_BaseOp {
 
             if (results == RSF_States.SensorColor.Red) {
                 if (!pusherEnabled) {
-                    rightPusher.setPosition(0.30d);
+                    leftPusher.setPosition(0.60d);
+                    rightPusher.setPosition(0.0d);
                     pusherEnabled = true;
                 }
             }
             else if (results == RSF_States.SensorColor.Blue) {
                 if (!pusherEnabled) {
-                    leftPusher.setPosition(0.30d);
+                    leftPusher.setPosition(0.0d);
+                    rightPusher.setPosition(0.60d);
                     pusherEnabled = true;
                 }
             }
@@ -380,7 +385,7 @@ public class RSF_7696_AutoBlue9 extends RSF_BaseOp {
     }
 
     public void Stage_13() {
-        int target = (int)(Full_Rotation * 0.65f);
+        int target = (int)(Full_Rotation * 0.35f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight) < target) {
             engine.SetSpeed(0.50d);
@@ -392,12 +397,12 @@ public class RSF_7696_AutoBlue9 extends RSF_BaseOp {
             resetStartTime();
             engine.ResetEncoders();
             engine.Stop();
-            stage = 50;
+            stage = 14;
         }
     }
 
     public void Stage_14() {
-        int target = -(int)(Full_Rotation * 1.50f);
+        int target = -(int)(Full_Rotation * 1.58f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) > target) {
             engine.Move(new RSF_Joysticks(-1.0d, 1.0d), 1.0d);
@@ -460,7 +465,7 @@ public class RSF_7696_AutoBlue9 extends RSF_BaseOp {
 
     public void Stage_18() {
         if (odsFront.getRawLightDetected() < 2.0d && odsBack.getRawLightDetected() < 2.0d) {
-            engine.Move(RSF_States.DPad.Left, 0.25d);
+            engine.Move(RSF_States.DPad.Left, 0.75d);
         }
         else {
             resetStartTime();
@@ -521,13 +526,15 @@ public class RSF_7696_AutoBlue9 extends RSF_BaseOp {
 
             if (results == RSF_States.SensorColor.Blue) {
                 if (!pusherEnabled) {
-                    rightPusher.setPosition(0.40d);
+                    leftPusher.setPosition(0.0d);
+                    rightPusher.setPosition(0.60d);
                     pusherEnabled = true;
                 }
             }
             else if (results == RSF_States.SensorColor.Red) {
                 if (!pusherEnabled) {
-                    leftPusher.setPosition(0.40d);
+                    leftPusher.setPosition(0.60d);
+                    rightPusher.setPosition(0.0d);
                     pusherEnabled = true;
                 }
             }

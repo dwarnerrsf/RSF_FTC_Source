@@ -40,7 +40,7 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
-@TeleOp(name="Pushbot: 8606 Auto Blue 1", group="Pushbot")
+@TeleOp(name="Pushbot: 8606 Auto Close", group="Pushbot")
 public class RSF_8606_AutoBlue1 extends RSF_BaseOp {
     private int stage = 0;
     private double speedModifier = 0.0d;
@@ -51,6 +51,9 @@ public class RSF_8606_AutoBlue1 extends RSF_BaseOp {
 
     private Servo flap = null;
     private Servo trigger = null;
+
+    private OpticalDistanceSensor odsFront = null;
+    private OpticalDistanceSensor odsBack = null;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -80,6 +83,9 @@ public class RSF_8606_AutoBlue1 extends RSF_BaseOp {
         trigger = hardwareMap.servo.get("TRIGGER");
         trigger.setPosition(0.0d);
 
+        deviceInterface.Initialize(hardwareMap, 5);
+        odsFront = hardwareMap.opticalDistanceSensor.get("ODSFRONT");
+        odsBack = hardwareMap.opticalDistanceSensor.get("ODSBACK");
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -90,13 +96,18 @@ public class RSF_8606_AutoBlue1 extends RSF_BaseOp {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+            odsFront.enableLed(true);
+            odsBack.enableLed(true);
+
             Execute();
 
             telemetry.addData("Stage: ", stage);
-            telemetry.addData("LF: ", engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft));
+            telemetry.addData("ODS Front: ", odsFront.getRawLightDetected());
+            telemetry.addData("ODS Back: ", odsBack.getRawLightDetected());
+            /*telemetry.addData("LF: ", engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft));
             telemetry.addData("LB: ", engine.GetEncoderPosition(RSF_States.EngineMotor.BackLeft));
             telemetry.addData("RF: ", engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight));
-            telemetry.addData("RB: ", engine.GetEncoderPosition(RSF_States.EngineMotor.BackRight));
+            telemetry.addData("RB: ", engine.GetEncoderPosition(RSF_States.EngineMotor.BackRight));*/
 
             Update(5);
         }
@@ -116,7 +127,7 @@ public class RSF_8606_AutoBlue1 extends RSF_BaseOp {
             case 4:
                 Stage_4();
                 break;
-            /*case 5:
+            case 5:
                 Stage_5();
                 break;
             case 6:
@@ -125,7 +136,7 @@ public class RSF_8606_AutoBlue1 extends RSF_BaseOp {
             case 7:
                 Stage_7();
                 break;
-            case 8:
+            /*case 8:
                 Stage_8();
                 break;
             case 9:
@@ -203,7 +214,7 @@ public class RSF_8606_AutoBlue1 extends RSF_BaseOp {
 
     public void Stage_2() {
         if (time < 1.0d) {
-            trigger.setPosition(0.375d);
+            engine.Stop();
         } else {
             resetStartTime();
             engine.ResetEncoders();
@@ -214,7 +225,7 @@ public class RSF_8606_AutoBlue1 extends RSF_BaseOp {
 
     public void Stage_3() {
         if (time < 1.0d) {
-            trigger.setPosition(0.0d);
+            trigger.setPosition(0.375d);
         } else {
             resetStartTime();
             engine.ResetEncoders();
@@ -225,12 +236,59 @@ public class RSF_8606_AutoBlue1 extends RSF_BaseOp {
 
     public void Stage_4() {
         if (time < 1.0d) {
-            trigger.setPosition(0.375d);
+            trigger.setPosition(0.0d);
         } else {
             resetStartTime();
             engine.ResetEncoders();
             engine.Stop();
             stage = 5;
+        }
+    }
+
+    public void Stage_5() {
+        if (time < 1.0d) {
+            trigger.setPosition(0.375d);
+        } else {
+            resetStartTime();
+            engine.ResetEncoders();
+            engine.Stop();
+            stage = 50;
+        }
+    }
+
+    public void Stage_6() {
+        int target = (int)(Full_Rotation * 1.15f);
+
+        if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target) {
+            engine.LeftTurn(0.60d);
+
+            telemetry.addData("Target: ", target);
+            telemetry.addData("Current: ", engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft));
+        }
+        else {
+            resetStartTime();
+            engine.ResetEncoders();
+            engine.Stop();
+            stage = 7;
+        }
+    }
+
+    public void Stage_7() {
+        int target = (int)(Full_Rotation * 2.0f);
+        shoot_1.setPower(-0.25d);
+        shoot_2.setPower(-0.25d);
+
+        if (/*engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target || */odsFront.getRawLightDetected() < 2.0d) {
+            engine.SetSpeed(0.25d);
+            engine.MoveTo(target);
+
+            telemetry.addData("Target: ", target);
+        }
+        else {
+            resetStartTime();
+            engine.ResetEncoders();
+            engine.Stop();
+            stage = 8;
         }
     }
 
