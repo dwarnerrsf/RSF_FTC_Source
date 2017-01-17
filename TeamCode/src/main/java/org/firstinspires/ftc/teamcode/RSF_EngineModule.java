@@ -245,6 +245,11 @@ public class RSF_EngineModule {
         SetPower(0.0, 0.0d, -1.0d, -1.0d);
     }
 
+    public void RighTurn(double power) {
+        SetMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        SetPower(0.0, 0.0d, power, power);
+    }
+
     public void LeftTurn() {
         SetMode(DcMotor.RunMode.RUN_USING_ENCODER);
         SetPower(-1.0, -1.0d, 0.0d, 0.0d);

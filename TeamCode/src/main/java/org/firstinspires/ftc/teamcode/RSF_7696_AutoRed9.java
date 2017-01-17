@@ -64,7 +64,7 @@ public class RSF_7696_AutoRed9 extends RSF_BaseOp {
     @Override
     public void runOpMode() throws InterruptedException {
         collector.Initialize(hardwareMap, DcMotorSimple.Direction.REVERSE);
-        color.Initialize(hardwareMap, false );
+        color.Initialize(hardwareMap, false);
         deviceInterface.Initialize(hardwareMap, 5);
         engine.Initialize(hardwareMap, RSF_States.Encoders.On);
         engine.SetSpeed(moveSpeed);
