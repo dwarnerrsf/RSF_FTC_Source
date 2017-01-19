@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Mon Jan 16 19:04:42 PST 2017
+#Wed Jan 18 19:12:39 PST 2017
 14.set=DEX
 180.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/raw/chimeconnect.wav
 118.set=ANDROID_RESOURCE
@@ -545,7 +545,7 @@ count=209
 84.base=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/assets/debug
 63.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/assets/debug/blocks/gyro_sensor.js
 138.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/layout/template_info.xml
-113.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/xml/k9legacybot.xml
+113.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/layout/info_button.xml
 29.set=ANDROID_RESOURCE
 90.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/assets/debug/toolbox/elapsed_time.xml
 165.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/menu/main_menu.xml
@@ -599,7 +599,7 @@ count=209
 60.base=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/assets/debug
 139.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/assets/debug/blocks/ir_seeker_sensor.js
 176.set=ASSET
-114.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/layout/info_button.xml
+114.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/xml/k9legacybot.xml
 39.set=DEX
 91.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/assets/debug/favicon.ico
 166.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/assets/debug/images/ftcElapsedTime.png

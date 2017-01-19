@@ -76,13 +76,18 @@ public class RSF_7696_Teleop extends RSF_BaseOp {
         shooter.SetActivePower(1.0d);
 
         leftPusher = hardwareMap.servo.get("LEFTPUSH");
+        leftPusher.setDirection(Servo.Direction.REVERSE);
         leftPusher.setPosition(0.0d);
 
         rightPusher = hardwareMap.servo.get("RIGHTPUSH");
+        rightPusher.setDirection(Servo.Direction.REVERSE);
         rightPusher.setPosition(0.0d);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
+
+        leftPusher.setPosition(0.60d);
+        rightPusher.setPosition(0.50d);
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
@@ -103,31 +108,12 @@ public class RSF_7696_Teleop extends RSF_BaseOp {
                     break;
             }
 
-            Controller_Joint();
             Controller_One();
             Controller_Two();
 
             telemetry.addData("Forward", (isForward) ? "True" : "False");
 
             Update(5);
-        }
-    }
-
-    private void Controller_Joint() {
-        if (gamepad2.left_bumper) {
-            collector.EnableReverse();
-        }
-        else if (gamepad2.right_bumper) {
-            collector.EnableForward();
-        }
-        else if (gamepad1.left_trigger > 0.0d) {
-            collector.EnableReverse();
-        }
-        else if (gamepad1.right_trigger > 0.0d) {
-            collector.EnableForward();
-        }
-        else {
-            collector.Disable();
         }
     }
 
@@ -138,52 +124,43 @@ public class RSF_7696_Teleop extends RSF_BaseOp {
         else if (gamepad1.b) {
             isForward = true;
         }
-        else if (gamepad1.x) {
+        else if (gamepad1.right_bumper) {
             speedModifier = 1.0d;
         }
-        else if (gamepad1.y) {
-            speedModifier = 0.27d;
+        else if (gamepad1.left_bumper) {
+            speedModifier = 0.38d;
         }
-    }
 
-    private void Controller_Two() {
-        if (gamepad2.right_trigger > 0.0d) {
+        if (gamepad1.right_trigger > 0.0d) {
             shooter.EnableForward();
         }
         else {
             shooter.Disable();
         }
+    }
 
-        if (gamepad2.y) {
-            lift_1.setPower(1.0d);
-            lift_2.setPower(1.0d);
+    private void Controller_Two() {
+        if (gamepad2.right_trigger > 0.0d) {
+            lift_1.setPower(gamepad2.right_trigger);
+            lift_2.setPower(gamepad2.right_trigger);
         }
-        else if (gamepad2.a) {
-            lift_1.setPower(-1.0d);
-            lift_2.setPower(-1.0d);
+        else if (gamepad2.left_trigger > 0.0d) {
+            lift_1.setPower(-gamepad2.left_trigger);
+            lift_2.setPower(-gamepad2.left_trigger);
         }
         else {
             lift_1.setPower(0.0d);
             lift_2.setPower(0.0d);
         }
 
-        if (gamepad2.dpad_left) {
-            leftPusher.setPosition(1.0d);
+        if (gamepad2.right_bumper) {
+            collector.EnableForward();
         }
-        else if (gamepad2.dpad_right) {
-            rightPusher.setPosition(1.0d);
+        else if (gamepad2.left_bumper) {
+            collector.EnableReverse();
         }
-        else if (gamepad2.dpad_down) {
-            servoPosition -= 0.025d;
-
-            leftPusher.setPosition(servoPosition);
-            rightPusher.setPosition(servoPosition);
-        }
-        else if (gamepad2.dpad_up) {
-            servoPosition += 0.025d;
-
-            leftPusher.setPosition(servoPosition);
-            rightPusher.setPosition(servoPosition);
+        else {
+            collector.Disable();
         }
     }
 }
