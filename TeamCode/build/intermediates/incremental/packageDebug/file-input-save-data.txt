@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Wed Jan 18 19:12:39 PST 2017
+#Thu Jan 19 20:51:24 PST 2017
 14.set=DEX
 180.file=/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/res/resources-debug.ap_/res/raw/chimeconnect.wav
 118.set=ANDROID_RESOURCE

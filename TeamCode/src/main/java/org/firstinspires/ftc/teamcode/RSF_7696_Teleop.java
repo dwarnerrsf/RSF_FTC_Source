@@ -128,7 +128,7 @@ public class RSF_7696_Teleop extends RSF_BaseOp {
             speedModifier = 1.0d;
         }
         else if (gamepad1.left_bumper) {
-            speedModifier = 0.38d;
+            speedModifier = 0.33d;
         }
 
         if (gamepad1.right_trigger > 0.0d) {
