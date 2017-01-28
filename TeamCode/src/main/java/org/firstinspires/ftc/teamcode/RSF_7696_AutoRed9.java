@@ -33,6 +33,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -41,6 +42,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @TeleOp(name="Pushbot: 7696 Auto Red 9", group="Pushbot")
+@Disabled
 public class RSF_7696_AutoRed9 extends RSF_BaseOp {
     private int stage = 0;
     private double moveSpeed = 0.0d;
