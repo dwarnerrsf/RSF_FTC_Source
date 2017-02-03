@@ -10,53 +10,26 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefau
 
 
 public class RSF_Beacon {
-    private boolean _hasCoordinates = false;
-    private boolean _isVisible = false;
-    private String _name = "";
-    private float _rotation = 0.0f;
-    private float _x = 0.0f;
-    private float _y = 0.0f;
+    public boolean HasCoordinates = false;
+    public boolean IsVisible = false;
+    public String Name = "";
+    public float Rotation = 0.0f;
+    public boolean Stale = false;
+    public float X = 0.0f;
+    public float Y = 0.0f;
 
-    public RSF_Beacon(VuforiaTrackable beacon) {
-        VuforiaTrackableDefaultListener listener = (VuforiaTrackableDefaultListener)beacon.getListener();
-        _name = beacon.getName();
-        _isVisible = listener.isVisible();
+    public RSF_Beacon(String name, boolean isVisible, OpenGLMatrix location, boolean stale) {
+        Name = name;
+        IsVisible = isVisible;
 
-        if (_isVisible) {
-            OpenGLMatrix location = listener.getUpdatedRobotLocation();
-
-            if (location != null) {
-                float[] coordinates = location.getTranslation().getData();
-                _hasCoordinates = true;
-                _x = coordinates[0];
-                _y = coordinates[1];
-                _rotation = Orientation.getOrientation(location, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
-            }
+        if (location != null) {
+            float[] coordinates = location.getTranslation().getData();
+            HasCoordinates = true;
+            X = coordinates[0];
+            Y = coordinates[1];
+            Rotation = Orientation.getOrientation(location, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
         }
-    }
 
-    public boolean HasCoordinates() {
-        return _hasCoordinates;
-    }
-
-    public boolean IsVisible() {
-        return _isVisible;
-    }
-
-    public String Name() {
-        return _name;
-    }
-
-
-    public float Rotation() {
-        return _rotation;
-    }
-
-    public float X() {
-        return _x;
-    }
-
-    public float Y() {
-        return _y;
+        Stale = stale;
     }
 }

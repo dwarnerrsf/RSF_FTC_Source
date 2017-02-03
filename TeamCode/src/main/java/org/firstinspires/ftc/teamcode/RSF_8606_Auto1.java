@@ -64,7 +64,6 @@ public class RSF_8606_Auto1 extends RSF_BaseOp {
         engine.Initialize(hardwareMap, RSF_States.Encoders.On);
         engine.SetSpeed(moveSpeed);
         lift.Initialize(hardwareMap);
-        //shooter.Initialize(hardwareMap);
         vuforia.Initialize(RSF_States.TeamColor.Red, VuforiaLicenseKey);
 
         leftPusher = hardwareMap.servo.get("LEFTPUSH");
@@ -83,13 +82,13 @@ public class RSF_8606_Auto1 extends RSF_BaseOp {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            beacon = vuforia.LocateBeacon(beaconIndex);
+            /*beacon = vuforia.LocateBeacon(beaconIndex);
             beaconName = beacon.Name();
             hasCoordinates = beacon.HasCoordinates();
             isVisible = beacon.IsVisible();
             x = beacon.X();
             y = beacon.Y();
-            rotation = beacon.Rotation();
+            rotation = beacon.Rotation();*/
 
             Execute();
 

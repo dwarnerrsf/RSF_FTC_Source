@@ -32,16 +32,20 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
-@TeleOp(name="Pushbot: 8606 Auto Far", group="Pushbot")
+@TeleOp(name="Pushbot: 8606 Blue v2", group="Pushbot")
 public class RSF_8606_AutoBlue2 extends RSF_BaseOp {
+    private boolean moveFlap = false;
+    private boolean useColor = false;
+    private boolean useVuforia = false;
+    private int beaconIndex = 0;
     private int stage = 0;
-    private double speedModifier = 0.0d;
     private final float Full_Rotation = 1478.4f;
 
     private DcMotor shoot_1 = null;
@@ -53,12 +57,15 @@ public class RSF_8606_AutoBlue2 extends RSF_BaseOp {
     private OpticalDistanceSensor odsFront = null;
     private OpticalDistanceSensor odsBack = null;
 
+    private ModernRoboticsI2cRangeSensor rangeSensor = null;
+
+    RSF_States.SensorColor results = RSF_States.SensorColor.None;
+    RSF_Beacon _coordinates = null;
+
     @Override
     public void runOpMode() throws InterruptedException {
-        speedModifier = 1.0d;
-
         engine.Initialize(hardwareMap);
-        engine.SetSpeed(speedModifier);
+        engine.SetSpeed(1.0d);
         engine.SetEngineMode(RSF_States.Encoders.On);
 
         lift.Initialize(hardwareMap);
@@ -82,26 +89,76 @@ public class RSF_8606_AutoBlue2 extends RSF_BaseOp {
         trigger.setPosition(0.0d);
 
         deviceInterface.Initialize(hardwareMap, 5);
+        color.Initialize(hardwareMap, true);
+        rangeSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "RANGE");
+
         odsFront = hardwareMap.opticalDistanceSensor.get("ODSFRONT");
+        odsFront.enableLed(true);
+
         odsBack = hardwareMap.opticalDistanceSensor.get("ODSBACK");
+        odsBack.enableLed(true);
+
+        vuforia.Initialize(RSF_States.TeamColor.Red, VuforiaKeys.Josh);
+        vuforia.Activate();
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         resetStartTime();
 
         stage = 1;
-        speedModifier = 0.15d;
+        beaconIndex = 0;
+        flap.setPosition(0.0d);
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            odsFront.enableLed(true);
-            odsBack.enableLed(true);
+            if (useColor) {
+                results = color.Detect();
+            }
+
+            if (useVuforia) {
+                _coordinates = vuforia.GetCoordinates(beaconIndex);
+            }
+
+            if (moveFlap) {
+                if (results == RSF_States.SensorColor.Red) {
+                    flap.setPosition(0.9375d);
+                }
+                else if (results == RSF_States.SensorColor.Blue) {
+                    flap.setPosition(0.0d);
+                }
+            }
 
             Execute();
 
             telemetry.addData("Stage: ", stage);
+
+            if (_coordinates != null && useVuforia) {
+                telemetry.addData(_coordinates.Name, _coordinates.IsVisible ? "Visible" : "Not Visible");
+                telemetry.addData("Stale Data: ", _coordinates.Stale ? "Yes" : "No");
+                telemetry.addData("Coordinates: ", _coordinates.HasCoordinates ? "Yes" : "No");
+                telemetry.addData("X: ", _coordinates.X);
+                telemetry.addData("Y: ", _coordinates.Y);
+                telemetry.addData("Rotation: ", _coordinates.Rotation);
+            }
+
+            String colorOutput = "";
+
+            switch (results) {
+                case Blue:
+                    colorOutput = "Blue";
+                    break;
+                case Red:
+                    colorOutput = "Red";
+                    break;
+                default:
+                    colorOutput = "None";
+                    break;
+            }
+
+            telemetry.addData("Color: ", colorOutput);
             telemetry.addData("ODS Front: ", odsFront.getRawLightDetected());
             telemetry.addData("ODS Back: ", odsBack.getRawLightDetected());
+            telemetry.addData("Range: ", rangeSensor.rawOptical());
 
             Update(5);
         }
@@ -130,7 +187,7 @@ public class RSF_8606_AutoBlue2 extends RSF_BaseOp {
             case 7:
                 Stage_7();
                 break;
-            /*case 8:
+            case 8:
                 Stage_8();
                 break;
             case 9:
@@ -172,15 +229,6 @@ public class RSF_8606_AutoBlue2 extends RSF_BaseOp {
             case 21:
                 Stage_21();
                 break;
-            case 22:
-                Stage_22();
-                break;
-            case 23:
-                Stage_23();
-                break;
-            case 24:
-                Stage_24();
-                break;*/
             default:
                 engine.Stop();
                 break;
@@ -188,12 +236,12 @@ public class RSF_8606_AutoBlue2 extends RSF_BaseOp {
     }
 
     public void Stage_1() {
-        int target = (int)(Full_Rotation * 1.60f);
+        int target = (int)(Full_Rotation * 0.80f);
         shoot_1.setPower(-0.25d);
         shoot_2.setPower(-0.25d);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target) {
-            engine.SetSpeed(0.25d);
+            engine.SetSpeed(0.35d);
             engine.MoveTo(target);
 
             telemetry.addData("Target: ", target);
@@ -207,51 +255,9 @@ public class RSF_8606_AutoBlue2 extends RSF_BaseOp {
     }
 
     public void Stage_2() {
-        if (time < 1.0d) {
-            engine.Stop();
-        } else {
-            resetStartTime();
-            engine.ResetEncoders();
-            engine.Stop();
-            stage = 3;
-        }
-    }
-
-    public void Stage_3() {
-        if (time < 1.0d) {
-            trigger.setPosition(0.375d);
-        } else {
-            resetStartTime();
-            engine.ResetEncoders();
-            engine.Stop();
-            stage = 4;
-        }
-    }
-
-    public void Stage_4() {
-        if (time < 1.0d) {
-            trigger.setPosition(0.0d);
-        } else {
-            resetStartTime();
-            engine.ResetEncoders();
-            engine.Stop();
-            stage = 5;
-        }
-    }
-
-    public void Stage_5() {
-        if (time < 1.0d) {
-            trigger.setPosition(0.375d);
-        } else {
-            resetStartTime();
-            engine.ResetEncoders();
-            engine.Stop();
-            stage = 50;
-        }
-    }
-
-    public void Stage_6() {
-        int target = (int)(Full_Rotation * 1.15f);
+        int target = (int)(Full_Rotation * 0.80f);
+        shoot_1.setPower(-0.25d);
+        shoot_2.setPower(-0.25d);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target) {
             engine.LeftTurn(0.60d);
@@ -263,40 +269,23 @@ public class RSF_8606_AutoBlue2 extends RSF_BaseOp {
             resetStartTime();
             engine.ResetEncoders();
             engine.Stop();
-            stage = 7;
+            stage = 3;
         }
     }
 
-    public void Stage_7() {
-        int target = (int)(Full_Rotation * 2.0f);
+    public void Stage_3() {
+        int target = (int)(Full_Rotation * 2.85f);
         shoot_1.setPower(-0.25d);
         shoot_2.setPower(-0.25d);
 
-        if (/*engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target || */odsFront.getRawLightDetected() < 2.0d) {
-            engine.SetSpeed(0.25d);
+        if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target) {
+            engine.SetSpeed(0.80d);
             engine.MoveTo(target);
 
             telemetry.addData("Target: ", target);
         }
         else {
-            resetStartTime();
-            engine.ResetEncoders();
-            engine.Stop();
-            stage = 8;
-        }
-    }
-
-    /*public void Stage_3() {
-        int target = -(int)(Full_Rotation * 3.5f);
-
-        if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) > target) {
-            engine.SetSpeed(0.50d);
-            engine.LeftTurn();
-
-            telemetry.addData("Target: ", target);
-            telemetry.addData("Current: ", engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft));
-        }
-        else {
+            useVuforia = true;
             resetStartTime();
             engine.ResetEncoders();
             engine.Stop();
@@ -305,13 +294,11 @@ public class RSF_8606_AutoBlue2 extends RSF_BaseOp {
     }
 
     public void Stage_4() {
-        int target = -(int)(Full_Rotation * 0.75f);
-
-        if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight) > target) {
-            engine.SetSpeed(0.50d);
-            engine.MoveTo(target);
-
-            telemetry.addData("Target: ", target);
+        if (!_coordinates.IsVisible) {
+            engine.Move(new RSF_Joysticks(1.0d, -1.0d), 0.15d);
+        }
+        else if (_coordinates.Rotation > 92.0f) {
+            engine.Move(new RSF_Joysticks(1.0d, -1.0d), 0.15d);
         }
         else {
             resetStartTime();
@@ -322,10 +309,14 @@ public class RSF_8606_AutoBlue2 extends RSF_BaseOp {
     }
 
     public void Stage_5() {
-        if (time < 1.20d) {
-            engine.Move(RSF_States.DPad.Left, 1.0d);
+        if (_coordinates.Rotation < 88.0f) {
+            engine.Move(new RSF_Joysticks(-1.0d, 1.0d), 0.10d);
+        }
+        else if (_coordinates.Rotation > 92.0f) {
+            engine.Move(new RSF_Joysticks(1.0d, -1.0d), 0.10d);
         }
         else {
+            useColor = true;
             resetStartTime();
             engine.ResetEncoders();
             engine.Stop();
@@ -334,25 +325,23 @@ public class RSF_8606_AutoBlue2 extends RSF_BaseOp {
     }
 
     public void Stage_6() {
-        int target = -(int)(Full_Rotation * 1.30f);
-
-        if (engine.GetAverageEncoderPosition() > target) {
-            engine.SetSpeed(0.50d);
-            engine.MoveTo(target);
-
-            telemetry.addData("Target: ", target);
+        if (_coordinates.Y < -550.0f) {
+            engine.Move(new RSF_Joysticks(1.0d, 1.0d), 0.30d);
         }
         else {
             resetStartTime();
             engine.ResetEncoders();
             engine.Stop();
-            stage = 7;
+            stage = 8;
         }
     }
 
     public void Stage_7() {
-        if (odsFront.getRawLightDetected() < 2.0d && odsBack.getRawLightDetected() < 2.0d) {
-            engine.Move(RSF_States.DPad.Left, 0.25d);
+        if (_coordinates.X < -10.0f) {
+            engine.Move(RSF_States.DPad.Right, 0.30d);
+        }
+        else if (_coordinates.X > 10.0f) {
+            engine.Move(RSF_States.DPad.Left, 0.30d);
         }
         else {
             resetStartTime();
@@ -363,13 +352,14 @@ public class RSF_8606_AutoBlue2 extends RSF_BaseOp {
     }
 
     public void Stage_8() {
-        if (odsFront.getRawLightDetected() < 2.0d) {
-            engine.Move(new RSF_Joysticks(1.0d, -1.0d), 1.0d);
+        if (_coordinates.Rotation < 88.0f) {
+            engine.Move(new RSF_Joysticks(-1.0d, 1.0d), 0.10d);
         }
-        else if (odsBack.getRawLightDetected() < 2.0d) {
-            engine.Move(new RSF_Joysticks(-1.0d, 1.0d), 1.0d);
+        else if (_coordinates.Rotation > 92.0f) {
+            engine.Move(new RSF_Joysticks(1.0d, -1.0d), 0.10d);
         }
         else {
+            moveFlap = true;
             resetStartTime();
             engine.ResetEncoders();
             engine.Stop();
@@ -378,8 +368,8 @@ public class RSF_8606_AutoBlue2 extends RSF_BaseOp {
     }
 
     public void Stage_9() {
-        if (rangeSensor.rawOptical() < 3) {
-            engine.Move(RSF_States.DPad.Down, 0.25d);
+        if (time < 0.75f) {
+            engine.Stop();
         }
         else {
             resetStartTime();
@@ -390,9 +380,12 @@ public class RSF_8606_AutoBlue2 extends RSF_BaseOp {
     }
 
     public void Stage_10() {
-        results = color.Detect();
-
-        if (results != RSF_States.SensorColor.None) {
+        if (rangeSensor.rawOptical() < 8) {
+            engine.Move(RSF_States.DPad.Up, 0.35d);
+        }
+        else {
+            moveFlap = false;
+            useColor = false;
             resetStartTime();
             engine.ResetEncoders();
             engine.Stop();
@@ -401,26 +394,8 @@ public class RSF_8606_AutoBlue2 extends RSF_BaseOp {
     }
 
     public void Stage_11() {
-        int target = (int)(Full_Rotation * 0.20f);
-
-        if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight) < target) {
-            engine.SetSpeed(0.50d);
-            engine.MoveTo(target);
-
-            telemetry.addData("Target: ", target);
-
-            if (results == RSF_States.SensorColor.Red) {
-                if (!pusherEnabled) {
-                    rightPusher.setPosition(0.30d);
-                    pusherEnabled = true;
-                }
-            }
-            else if (results == RSF_States.SensorColor.Blue) {
-                if (!pusherEnabled) {
-                    leftPusher.setPosition(0.30d);
-                    pusherEnabled = true;
-                }
-            }
+        if (_coordinates.Y > -600.f) {
+            engine.Move(RSF_States.DPad.Down, 0.50d);
         }
         else {
             resetStartTime();
@@ -431,10 +406,16 @@ public class RSF_8606_AutoBlue2 extends RSF_BaseOp {
     }
 
     public void Stage_12() {
-        if (rangeSensor.rawOptical() < 8) {
-            engine.Move(RSF_States.DPad.Down, 0.50d);
+        int target = -(int)(Full_Rotation * 1.20f);
+
+        if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) > target) {
+            engine.Move(new RSF_Joysticks(-1.0d, 1.0d), 0.50d);
+
+            telemetry.addData("Target: ", target);
+            telemetry.addData("Current: ", engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft));
         }
         else {
+            beaconIndex = 2;
             resetStartTime();
             engine.ResetEncoders();
             engine.Stop();
@@ -443,10 +424,10 @@ public class RSF_8606_AutoBlue2 extends RSF_BaseOp {
     }
 
     public void Stage_13() {
-        int target = (int)(Full_Rotation * 0.65f);
+        int target = (int)(Full_Rotation * 3.72f);
 
-        if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight) < target) {
-            engine.SetSpeed(0.50d);
+        if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target) {
+            engine.SetSpeed(0.80d);
             engine.MoveTo(target);
 
             telemetry.addData("Target: ", target);
@@ -455,50 +436,41 @@ public class RSF_8606_AutoBlue2 extends RSF_BaseOp {
             resetStartTime();
             engine.ResetEncoders();
             engine.Stop();
-            stage = 50;
+            stage = 14;
         }
     }
 
     public void Stage_14() {
-        int target = -(int)(Full_Rotation * 1.50f);
-
-        if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) > target) {
-            engine.Move(new RSF_Joysticks(-1.0d, 1.0d), 1.0d);
+        if (!_coordinates.IsVisible) {
+            engine.Move(new RSF_Joysticks(1.0d, -1.0d), 0.10d);
         }
         else {
             resetStartTime();
             engine.ResetEncoders();
+            engine.Stop();
             stage = 15;
         }
     }
 
     public void Stage_15() {
-        if (time > 1.0d)
-        {
-            if (odsBack.getRawLightDetected() < 2.0d) {
-                engine.Move(RSF_States.DPad.Up, 0.50d);
-            }
-            else {
-                resetStartTime();
-                engine.ResetEncoders();
-                engine.Stop();
-                stage = 16;
-            }
+        if (_coordinates.Rotation < 88.0f) {
+            engine.Move(new RSF_Joysticks(-1.0d, 1.0d), 0.10d);
+        }
+        else if (_coordinates.Rotation > 92.0f) {
+            engine.Move(new RSF_Joysticks(1.0d, -1.0d), 0.10d);
         }
         else {
-            engine.Move(RSF_States.DPad.Up, 0.50d);
-
+            useColor = true;
+            resetStartTime();
+            engine.ResetEncoders();
+            engine.Stop();
+            stage = 16;
         }
     }
 
     public void Stage_16() {
-        int target = -(int)(Full_Rotation * 0.35f);
-
-        if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight) > target) {
-            engine.SetSpeed(0.50d);
-            engine.MoveTo(target);
-
-            telemetry.addData("Target: ", target);
+        if (rangeSensor.rawOptical() > 0) {
+            engine.Move(new RSF_Joysticks(1.0d, 1.0d), 0.30d);
         }
         else {
             resetStartTime();
@@ -509,21 +481,24 @@ public class RSF_8606_AutoBlue2 extends RSF_BaseOp {
     }
 
     public void Stage_17() {
-        int target = (int)(Full_Rotation * 1.60f);
-
-        if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target) {
-            engine.Move(new RSF_Joysticks(1.0d, -1.0d), 1.0d);
+        if (_coordinates.Rotation < 88.0f) {
+            engine.Move(new RSF_Joysticks(-1.0d, 1.0d), 0.10d);
+        }
+        else if (_coordinates.Rotation > 92.0f) {
+            engine.Move(new RSF_Joysticks(1.0d, -1.0d), 0.10d);
         }
         else {
+            moveFlap = true;
             resetStartTime();
             engine.ResetEncoders();
+            engine.Stop();
             stage = 18;
         }
     }
 
     public void Stage_18() {
-        if (odsFront.getRawLightDetected() < 2.0d && odsBack.getRawLightDetected() < 2.0d) {
-            engine.Move(RSF_States.DPad.Left, 0.25d);
+        if (_coordinates.Y < 1300.0f) {
+            engine.Move(RSF_States.DPad.Up, 0.30d);
         }
         else {
             resetStartTime();
@@ -534,11 +509,8 @@ public class RSF_8606_AutoBlue2 extends RSF_BaseOp {
     }
 
     public void Stage_19() {
-        if (odsFront.getRawLightDetected() < 2.0d) {
-            engine.Move(new RSF_Joysticks(1.0d, -1.0d), 1.0d);
-        }
-        else if (odsBack.getRawLightDetected() < 2.0d) {
-            engine.Move(new RSF_Joysticks(-1.0d, 1.0d), 1.0d);
+        if (time < 0.75f) {
+            engine.Stop();
         }
         else {
             resetStartTime();
@@ -549,10 +521,12 @@ public class RSF_8606_AutoBlue2 extends RSF_BaseOp {
     }
 
     public void Stage_20() {
-        if (rangeSensor.rawOptical() < 3) {
-            engine.Move(RSF_States.DPad.Down, 0.25d);
+        if (rangeSensor.rawOptical() < 8) {
+            engine.Move(RSF_States.DPad.Up, 0.35d);
         }
         else {
+            moveFlap = false;
+            useColor = false;
             resetStartTime();
             engine.ResetEncoders();
             engine.Stop();
@@ -561,76 +535,16 @@ public class RSF_8606_AutoBlue2 extends RSF_BaseOp {
     }
 
     public void Stage_21() {
-        results = color.Detect();
-
-        if (results != RSF_States.SensorColor.None) {
+        if (rangeSensor.rawOptical() > 1) {
+            engine.Move(RSF_States.DPad.Down, 0.35d);
+        }
+        else {
             resetStartTime();
             engine.ResetEncoders();
             engine.Stop();
             stage = 22;
-
-            pusherEnabled = false;
         }
     }
-
-    public void Stage_22() {
-        int target = (int)(Full_Rotation * 0.20f);
-
-        if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight) < target) {
-            engine.SetSpeed(0.50d);
-            engine.MoveTo(target);
-
-            telemetry.addData("Target: ", target);
-
-            if (results == RSF_States.SensorColor.Blue) {
-                if (!pusherEnabled) {
-                    rightPusher.setPosition(0.40d);
-                    pusherEnabled = true;
-                }
-            }
-            else if (results == RSF_States.SensorColor.Red) {
-                if (!pusherEnabled) {
-                    leftPusher.setPosition(0.40d);
-                    pusherEnabled = true;
-                }
-            }
-        }
-        else {
-            resetStartTime();
-            engine.ResetEncoders();
-            engine.Stop();
-            stage = 23;
-        }
-    }
-
-    public void Stage_23() {
-        if (rangeSensor.rawOptical() < 8) {
-            engine.Move(RSF_States.DPad.Down, 0.50d);
-        }
-        else {
-            resetStartTime();
-            engine.ResetEncoders();
-            engine.Stop();
-            stage = 24;
-        }
-    }
-
-    public void Stage_24() {
-        int target = (int)(Full_Rotation * 0.25f);
-
-        if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight) < target) {
-            engine.SetSpeed(0.50d);
-            engine.MoveTo(target);
-
-            telemetry.addData("Target: ", target);
-        }
-        else {
-            resetStartTime();
-            engine.ResetEncoders();
-            engine.Stop();
-            stage = 26;
-        }
-    }*/
 }
 
 

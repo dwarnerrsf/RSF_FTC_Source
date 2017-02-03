@@ -57,7 +57,7 @@ public class RSF_8605_Auto8 extends RSF_BaseOp {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        collector.Initialize(hardwareMap, DcMotorSimple.Direction.REVERSE);
+        /*collector.Initialize(hardwareMap, DcMotorSimple.Direction.REVERSE);
         color.Initialize(hardwareMap, true);
         deviceInterface.Initialize(hardwareMap, 5);
         engine.Initialize(hardwareMap);
@@ -104,7 +104,7 @@ public class RSF_8605_Auto8 extends RSF_BaseOp {
             telemetry.addData("Shooter: ", shooterPosition);
 
             Update(40);
-        }
+        }*/
     }
 
     public void Execute() {

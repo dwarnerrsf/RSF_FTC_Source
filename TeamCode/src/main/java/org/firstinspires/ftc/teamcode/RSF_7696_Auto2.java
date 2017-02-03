@@ -58,7 +58,7 @@ public class RSF_7696_Auto2 extends RSF_BaseOp {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        collector.Initialize(hardwareMap, DcMotorSimple.Direction.REVERSE);
+        /*collector.Initialize(hardwareMap, DcMotorSimple.Direction.REVERSE);
         color.Initialize(hardwareMap, false );
         deviceInterface.Initialize(hardwareMap, 5);
         engine.Initialize(hardwareMap, RSF_States.Encoders.On);
@@ -105,7 +105,7 @@ public class RSF_7696_Auto2 extends RSF_BaseOp {
             telemetry.addData("Encoder RB: ", engine.GetEncoderPosition(RSF_States.EngineMotor.BackRight));
 
             Update(40);
-        }
+        }*/
     }
 
     public void Execute() {

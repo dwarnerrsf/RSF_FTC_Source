@@ -51,7 +51,7 @@ public class RSF_8605_Auto5 extends RSF_BaseOp {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        vuforia.Initialize(RSF_States.TeamColor.Blue, VuforiaLicenseKey);
+        /*vuforia.Initialize(RSF_States.TeamColor.Blue, VuforiaLicenseKey);
         engine.SetSpeed(0.15d);
 
         // Wait for the game to start (driver presses PLAY)
@@ -81,7 +81,7 @@ public class RSF_8605_Auto5 extends RSF_BaseOp {
             telemetry.addData("Time: ", time);
 
             Update(40);
-        }
+        }*/
     }
 
     public void Execute() {

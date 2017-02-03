@@ -58,7 +58,7 @@ public class RSF_7696_Auto1 extends RSF_BaseOp {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        collector.Initialize(hardwareMap, DcMotorSimple.Direction.REVERSE);
+        /*collector.Initialize(hardwareMap, DcMotorSimple.Direction.REVERSE);
         color.Initialize(hardwareMap, false );
         deviceInterface.Initialize(hardwareMap, 5);
         engine.Initialize(hardwareMap);
@@ -101,7 +101,7 @@ public class RSF_7696_Auto1 extends RSF_BaseOp {
             telemetry.addData("Time: ", time);
 
             Update(40);
-        }
+        }*/
     }
 
     public void Execute() {
