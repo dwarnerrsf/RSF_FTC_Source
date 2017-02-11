@@ -191,7 +191,7 @@ public class RSF_7696_AutoRed11 extends RSF_BaseOp {
     }
 
     public void Stage_1() {
-        int target = -(int)(Full_Rotation * 1.25f);
+        int target = -(int)(Full_Rotation * 1.0f);
 
         if (engine.GetAverageEncoderPosition() > target) {
             engine.SetSpeed(0.50d);
@@ -222,7 +222,7 @@ public class RSF_7696_AutoRed11 extends RSF_BaseOp {
     }
 
     public void Stage_3() {
-        int target = -(int)(Full_Rotation * 3.70f);
+        int target = -(int)(Full_Rotation * 3.15f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight) > target) {
             engine.SetSpeed(0.50d);
@@ -240,7 +240,7 @@ public class RSF_7696_AutoRed11 extends RSF_BaseOp {
     }
 
     public void Stage_4() {
-        int target = -(int)(Full_Rotation * 0.75f);
+        int target = -(int)(Full_Rotation * 0.65f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight) > target) {
             engine.SetSpeed(0.50d);
@@ -269,7 +269,7 @@ public class RSF_7696_AutoRed11 extends RSF_BaseOp {
     }
 
     public void Stage_6() {
-        int target = -(int)(Full_Rotation * 1.30f);
+        int target = -(int)(Full_Rotation * 1.10f);
 
         if (engine.GetAverageEncoderPosition() > target) {
             engine.SetSpeed(0.50d);
@@ -298,7 +298,7 @@ public class RSF_7696_AutoRed11 extends RSF_BaseOp {
     }
 
     public void Stage_8() {
-        if (rangeSensor.rawOptical() < 3) {
+        if (rangeSensor.rawOptical() < 1) {
             engine.Move(RSF_States.DPad.Down, 0.25d);
         }
         else {
@@ -321,7 +321,7 @@ public class RSF_7696_AutoRed11 extends RSF_BaseOp {
     }
 
     public void Stage_10() {
-        int target = (int)(Full_Rotation * 0.20f);
+        int target = (int)(Full_Rotation * 0.15f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight) < target) {
             engine.SetSpeed(0.50d);
@@ -370,7 +370,7 @@ public class RSF_7696_AutoRed11 extends RSF_BaseOp {
     }
 
     public void Stage_12() {
-        int target = (int)(Full_Rotation * 0.35f);
+        int target = (int)(Full_Rotation * 0.50f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target) {
             engine.SetSpeed(0.50d);
@@ -446,7 +446,7 @@ public class RSF_7696_AutoRed11 extends RSF_BaseOp {
     }
 
     public void Stage_16() {
-        int target = (int)(Full_Rotation * 1.45f);
+        int target = (int)(Full_Rotation * 1.30f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight) < target) {
             engine.Move(new RSF_Joysticks(-1.0d, 1.0d), 1.0d);
@@ -479,7 +479,7 @@ public class RSF_7696_AutoRed11 extends RSF_BaseOp {
     }
 
     public void Stage_18() {
-        if (rangeSensor.rawOptical() < 3) {
+        if (rangeSensor.rawOptical() < 1) {
             engine.Move(RSF_States.DPad.Down, 0.25d);
         }
         else {
@@ -563,111 +563,6 @@ public class RSF_7696_AutoRed11 extends RSF_BaseOp {
             stage = 23;
         }
     }
-
-    /*public void Stage_15() {
-        if (rangeSensor.rawOptical() < 3) {
-            engine.Move(RSF_States.DPad.Down, 0.25d);
-        }
-        else {
-            resetStartTime();
-            engine.ResetEncoders();
-            engine.Stop();
-            stage = 16;
-        }
-    }*/
-
-    /*public void Stage_16() {
-        results = color.Detect();
-
-        if (results != RSF_States.SensorColor.None) {
-            resetStartTime();
-            engine.ResetEncoders();
-            engine.Stop();
-            stage = 17;
-
-            pusherEnabled = false;
-        }
-    }*/
-
-    /*public void Stage_17() {
-        int target = (int)(Full_Rotation * 0.65f);
-
-        if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight) < target) {
-            engine.SetSpeed(0.50d);
-            engine.MoveTo(target);
-
-            telemetry.addData("Target: ", target);
-
-            if (results == RSF_States.SensorColor.Blue) {
-                if (!pusherEnabled) {
-                    rightPusher.setPosition(0.36d);
-                    pusherEnabled = true;
-                }
-            }
-            else if (results == RSF_States.SensorColor.Red) {
-                if (!pusherEnabled) {
-                    leftPusher.setPosition(0.36d);
-                    pusherEnabled = true;
-                }
-            }
-        }
-        else {
-            resetStartTime();
-            engine.ResetEncoders();
-            engine.Stop();
-            stage = 18;
-        }
-    }*/
-
-    /*public void Stage_18() {
-        if (front && !back) {
-            if (odsBack.getRawLightDetected() < 1.0d) {
-                engine.Move(new RSF_Joysticks(-1.0d, 1.0d), 0.45d);
-            }
-            else {
-                back = true;
-                engine.Stop();
-            }
-            engine.Move(RSF_States.DPad.Right, 0.25d);
-        }
-        else if (back && !front) {
-            if (odsFront.getRawLightDetected() < 1.0d) {
-                engine.Move(new RSF_Joysticks(1.0d, -1.0d), 0.45d);
-            }
-            else {
-                front = true;
-                engine.Stop();
-            }
-        }
-        else {
-            resetStartTime();
-            engine.ResetEncoders();
-            engine.Stop();
-            stage = 19;
-        }
-
-        if (time < 0.30d) {
-            engine.Move(new RSF_Joysticks(1.0d, -1.0d), 0.45d);
-        }
-        else {
-            resetStartTime();
-            engine.ResetEncoders();
-            engine.Stop();
-            stage = 19;
-        }
-    }*/
-
-    /*public void Stage_19() {
-        if (rangeSensor.rawOptical() < 8) {
-            engine.Move(RSF_States.DPad.Down, 0.50d);
-        }
-        else {
-            resetStartTime();
-            engine.ResetEncoders();
-            engine.Stop();
-            stage = 20;
-        }
-    }*/
 }
 
 

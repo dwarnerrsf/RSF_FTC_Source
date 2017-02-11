@@ -42,15 +42,21 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
 
-@TeleOp(name="Pushbot: 7696 Blue 11", group="Pushbot")
+@TeleOp(name="Pushbot: Sensor Op", group="Pushbot")
 public class RSF_SensorOp extends LinearOpMode implements SensorEventListener {
     private SensorManager _SensorManager = null;
     private Sensor _Accelerometer = null;
+    private Sensor _Gyro = null;
+    private Sensor _Rotation = null;
     private float X, Y, Z = 0.0f;
     private final float NOISE = 2.0f;
+    private String type = "";
+
 
     protected void onResume() {
-        _SensorManager.registerListener(this, _Accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        //_SensorManager.registerListener(this, _Accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        _SensorManager.registerListener(this, _Gyro , SensorManager.SENSOR_DELAY_NORMAL);
+        //_SensorManager.registerListener(this, _Rotation, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     protected void onPause() {
@@ -65,23 +71,32 @@ public class RSF_SensorOp extends LinearOpMode implements SensorEventListener {
     @Override
     public void runOpMode() throws InterruptedException {
         _SensorManager = (SensorManager)hardwareMap.appContext.getSystemService(Context.SENSOR_SERVICE);
-        _Accelerometer = _SensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        _SensorManager.registerListener(this, _Accelerometer , SensorManager.SENSOR_DELAY_NORMAL);
+
+        //_Accelerometer = _SensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        _Gyro = _SensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        //_Rotation = _SensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+
+        //_SensorManager.registerListener(this, _Accelerometer , SensorManager.SENSOR_DELAY_NORMAL);
+        _SensorManager.registerListener(this, _Gyro , SensorManager.SENSOR_DELAY_NORMAL);
+        //_SensorManager.registerListener(this, _Rotation , SensorManager.SENSOR_DELAY_NORMAL);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         resetStartTime();
 
-
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+            if (_Gyro == null) {
+                telemetry.addData("Gyro: ", "None");
+            }
 
+            telemetry.update();
         }
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        float x = event.values[0];
+        /*float x = event.values[0];
         float y = event.values[1];
         float z = event.values[2];
 
@@ -103,15 +118,28 @@ public class RSF_SensorOp extends LinearOpMode implements SensorEventListener {
 
         X = x;
         Y = y;
-        Z = z;
+        Z = z;*/
 
-        telemetry.addData("D_X: ", X);
-        telemetry.addData("D_Y: ", Y);
-        telemetry.addData("D_Z: ", Z);
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            type = "Accelerometer";
+        }
+        else if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
+            type = "Gyro";
+        }
+        else if (event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
+            type = "Rotation";
+        }
+        else {
+            type = "None";
+        }
 
+        telemetry.addData("Type: ", type);
+        /*telemetry.addData("X: ", x);
+        telemetry.addData("Y: ", y);
+        telemetry.addData("Z: ", z);
         telemetry.addData("D_X: ", deltaX);
         telemetry.addData("D_Y: ", deltaY);
-        telemetry.addData("D_Z: ", deltaZ);
+        telemetry.addData("D_Z: ", deltaZ);*/
     }
 }
 
