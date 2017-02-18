@@ -16,7 +16,7 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.3"
-        sha1="6cc0226e15435c779c82fc969913f252773e10d3">
+        sha1="10033556440467fefc2465c8e107017202d8d8f3">
         <dex dex="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_e7dbefe4f13d448c60a0b55b9d65c944c1d69955/classes.dex" />
     </item>
     <item
@@ -48,21 +48,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/exploded-aar/RobotCore-release/jars/libs/d2xx.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.3"
-        sha1="84a174a0d6bebc32bf1e7cd4139224f0b05df829">
-        <dex dex="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/transforms/dex/debug/folders/1000/10/d2xx_36fcf606afb93704d275a1f5b9e8b06ca29b8648/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/exploded-aar/RobotCore-release/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.3"
         sha1="dc4ad03580e3f29564476f06b65f06d89704c0a9">
         <dex dex="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/transforms/dex/debug/folders/1000/10/intermediates-exploded-aar-RobotCore-release_8eb201d2e0a9c59ee13df3cc779691b17c58b13f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/exploded-aar/RobotCore-release/jars/libs/d2xx.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="84a174a0d6bebc32bf1e7cd4139224f0b05df829">
+        <dex dex="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/transforms/dex/debug/folders/1000/10/d2xx_36fcf606afb93704d275a1f5b9e8b06ca29b8648/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -88,7 +88,7 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.3"
-        sha1="0863c6dbeff5fcf955f5877099b59b7c67466469">
+        sha1="fe11ee5ed64d0c3af02f9f8bf34214669d325e73">
         <dex dex="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_de839eed636a76f1ebe15cc09c23850ab9295e42/classes.dex" />
     </item>
     <item
