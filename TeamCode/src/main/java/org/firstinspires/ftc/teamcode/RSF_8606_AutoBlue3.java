@@ -266,12 +266,12 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
     }
 
     public void Stage_1() {
-        int target = (int) (Full_Rotation * 4.20f);
+        int target = (int) (Full_Rotation * 4.02f);
         shoot_1.setPower(-0.25d);
         shoot_2.setPower(-0.25d);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target) {
-            engine.SetSpeed(0.65d);
+            engine.SetSpeed(1.0d);
             engine.MoveTo(target);
 
             telemetry.addData("Target: ", target);
@@ -354,16 +354,22 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
     }
 
     public void Stage_9() {
-        if (_coordinates.Y > -600.0f) {
+        if (_coordinates.Y > -325.0f) {
             engine.Move(RSF_States.DPad.Down, 0.50d);
         } else {
-            beaconIndex = 2;
-            Next(10);
+            if (_coordinates.Rotation < 110.0f) {
+                engine.Move(new RSF_Joysticks(-1.0d, 1.0d), 0.10d);
+            } else if (_coordinates.Rotation > 115.0f) {
+                engine.Move(new RSF_Joysticks(1.0d, -1.0d), 0.10d);
+            } else {
+                beaconIndex = 2;
+                Next(10);
+            }
         }
     }
 
     public void Stage_10() {
-        int target = -(int) (Full_Rotation * 3.80f);
+        int target = -(int) (Full_Rotation * 4.10f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) > target) {
             engine.Move(RSF_States.DPad.Left, 1.0d);
@@ -381,7 +387,7 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
             engine.Move(new RSF_Joysticks(1.0d, -1.0d), 0.10d);
         } else {
             useColor = true;
-            Next(100);
+            Next(14);
         }
     }
 
@@ -415,7 +421,7 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
         useColor = true;
         moveFlap = true;
 
-        if (_coordinates.Y < -475.0f) {
+        if (_coordinates.Y < 1300.0f) {
             engine.Move(RSF_States.DPad.Up, 0.30d);
         } else {
             Next(15);
@@ -448,7 +454,7 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
     }
 
     public void Stage_17() {
-        if (_coordinates.Y < -300.0f) {
+        if (_coordinates.Y < 1465.0f) {
             engine.Move(RSF_States.DPad.Up, 0.35d);
         } else {
             moveFlap = false;
@@ -458,7 +464,7 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
     }
 
     public void Stage_18() {
-        if (_coordinates.Y > -400.0f) {
+        if (_coordinates.Y > 1400.0f) {
             engine.Move(RSF_States.DPad.Down, 0.50d);
         } else {
             useVuforia = false;
@@ -467,10 +473,10 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
     }
 
     public void Stage_19() {
-        int target = (int) (Full_Rotation * 1.90f);
+        int target = (int) (Full_Rotation * 1.82f);
 
-        if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight) < target) {
-            engine.Move(new RSF_Joysticks(-1.0d, 1.0d), 0.40d);
+        if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target) {
+            engine.Move(new RSF_Joysticks(1.0d, -1.0d), 0.80d);
 
             telemetry.addData("Target: ", target);
         } else {
@@ -479,10 +485,10 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
     }
 
     public void Stage_20() {
-        int target = (int) (Full_Rotation * 1.20f);
+        int target = (int) (Full_Rotation * 1.25f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target) {
-            engine.SetSpeed(0.65d);
+            engine.SetSpeed(1.0d);
             engine.MoveTo(target);
 
             telemetry.addData("Target: ", target);
@@ -527,7 +533,7 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
         int target = (int) (Full_Rotation * 2.25f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target) {
-            engine.SetSpeed(0.65d);
+            engine.SetSpeed(1.0d);
             engine.MoveTo(target);
 
             telemetry.addData("Target: ", target);
