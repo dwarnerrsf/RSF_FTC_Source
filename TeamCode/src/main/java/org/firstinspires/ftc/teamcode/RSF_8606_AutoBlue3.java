@@ -473,10 +473,10 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
     }
 
     public void Stage_19() {
-        int target = (int) (Full_Rotation * 1.82f);
+        int target = (int) (Full_Rotation * 1.70f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target) {
-            engine.Move(new RSF_Joysticks(1.0d, -1.0d), 0.80d);
+            engine.Move(new RSF_Joysticks(1.0d, -1.0d), 1.0d);
 
             telemetry.addData("Target: ", target);
         } else {

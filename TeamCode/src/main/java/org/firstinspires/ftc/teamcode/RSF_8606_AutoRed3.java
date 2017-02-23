@@ -266,12 +266,12 @@ public class RSF_8606_AutoRed3 extends RSF_BaseOp {
     }
 
     public void Stage_1() {
-        int target = (int) (Full_Rotation * 4.20f);
+        int target = (int) (Full_Rotation * 4.0f);
         shoot_1.setPower(-0.25d);
         shoot_2.setPower(-0.25d);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target) {
-            engine.SetSpeed(0.65d);
+            engine.SetSpeed(1.0d);
             engine.MoveTo(target);
 
             telemetry.addData("Target: ", target);
@@ -300,7 +300,7 @@ public class RSF_8606_AutoRed3 extends RSF_BaseOp {
             engine.Move(new RSF_Joysticks(1.0d, -1.0d), 0.10d);
         } else {
             useColor = true;
-            Next(4);
+            Next(5);
         }
     }
 
@@ -467,10 +467,10 @@ public class RSF_8606_AutoRed3 extends RSF_BaseOp {
     }
 
     public void Stage_19() {
-        int target = (int) (Full_Rotation * 1.90f);
+        int target = (int) (Full_Rotation * 1.70f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight) < target) {
-            engine.Move(new RSF_Joysticks(-1.0d, 1.0d), 0.40d);
+            engine.Move(new RSF_Joysticks(-1.0d, 1.0d), 1.0d);
 
             telemetry.addData("Target: ", target);
         } else {
@@ -479,10 +479,10 @@ public class RSF_8606_AutoRed3 extends RSF_BaseOp {
     }
 
     public void Stage_20() {
-        int target = (int) (Full_Rotation * 1.20f);
+        int target = (int) (Full_Rotation * 1.0f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target) {
-            engine.SetSpeed(0.65d);
+            engine.SetSpeed(1.0d);
             engine.MoveTo(target);
 
             telemetry.addData("Target: ", target);
@@ -524,10 +524,10 @@ public class RSF_8606_AutoRed3 extends RSF_BaseOp {
     }
 
     public void Stage_25() {
-        int target = (int) (Full_Rotation * 2.25f);
+        int target = (int) (Full_Rotation * 2.45f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target) {
-            engine.SetSpeed(0.65d);
+            engine.SetSpeed(1.0d);
             engine.MoveTo(target);
 
             telemetry.addData("Target: ", target);
