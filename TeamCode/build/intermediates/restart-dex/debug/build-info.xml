@@ -5,9 +5,8 @@
     density="xhdpi"
     format="8"
     plugin-version="2.2.2"
-    timestamp="46365207312773"
-    token="-2353666316279564087"
-    verifier="COLD_SWAP_REQUESTED" >
+    timestamp="48582296684996"
+    token="-2353666316279564087" >
 
     <task
         name="javac"
@@ -23,21 +22,12 @@
         duration="0" />
 
     <build
-        timestamp="46322142333340"
+        timestamp="48528017367094"
         verifier="FULL_BUILD_REQUESTED" >
         <artifact
             location="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/outputs/apk/TeamCode-debug.apk"
             type="MAIN" />
     </build>
-    <build
-        timestamp="46365207312773"
-        verifier="COLD_SWAP_REQUESTED" />
-    <build
-        timestamp="99801353463828"
-        verifier="COLD_SWAP_REQUESTED" >
-        <artifact
-            location="/Users/jotto/Documents/RSF_FTC_Source/TeamCode/build/intermediates/transforms/dex/debug/folders/1000/5/slice_2/classes.dex"
-            type="DEX" />
-    </build>
+    <build timestamp="48582296684996" />
 
 </instant-run>

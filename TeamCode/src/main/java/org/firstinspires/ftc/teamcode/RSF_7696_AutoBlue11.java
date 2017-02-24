@@ -30,14 +30,14 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
 TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-package org.firstinspires.ftc.teamcode;
+        package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
-import com.qualcomm.robotcore.hardware.Servo;
+        import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
+        import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+        import com.qualcomm.robotcore.hardware.DcMotor;
+        import com.qualcomm.robotcore.hardware.DcMotorSimple;
+        import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
+        import com.qualcomm.robotcore.hardware.Servo;
 
 
 @TeleOp(name="Pushbot: 7696 Blue 11", group="Pushbot")
@@ -230,7 +230,7 @@ public class RSF_7696_AutoBlue11 extends RSF_BaseOp {
     }
 
     public void Stage_2() {
-        if (time < 5.0d) {
+        if (time < 4.50d) {
             shooter.EnableForward();
         } else {
             resetStartTime();
@@ -244,7 +244,7 @@ public class RSF_7696_AutoBlue11 extends RSF_BaseOp {
     }
 
     public void Stage_3() {
-        int target = -(int)(Full_Rotation * 3.10f);
+        int target = -(int)(Full_Rotation * 3.0f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) > target) {
             engine.SetSpeed(0.50d);
@@ -262,7 +262,7 @@ public class RSF_7696_AutoBlue11 extends RSF_BaseOp {
     }
 
     public void Stage_4() {
-        int target = -(int)(Full_Rotation * 0.85f);
+        int target = -(int)(Full_Rotation * 0.80f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight) > target) {
             engine.SetSpeed(0.50d);
@@ -291,7 +291,7 @@ public class RSF_7696_AutoBlue11 extends RSF_BaseOp {
     }
 
     public void Stage_6() {
-        int target = -(int)(Full_Rotation * 0.95f);
+        int target = -(int)(Full_Rotation * 0.90f);
 
         if (engine.GetAverageEncoderPosition() > target) {
             engine.SetSpeed(0.50d);
@@ -420,7 +420,7 @@ public class RSF_7696_AutoBlue11 extends RSF_BaseOp {
         if (time > 1.0d)
         {
             if (odsFront.getRawLightDetected() < 2.0d) {
-                engine.Move(RSF_States.DPad.Down, 0.80d);
+                engine.Move(RSF_States.DPad.Down, 0.70d);
             }
             else {
                 resetStartTime();
@@ -433,7 +433,7 @@ public class RSF_7696_AutoBlue11 extends RSF_BaseOp {
             }
         }
         else {
-            engine.Move(RSF_States.DPad.Down, 0.50d);
+            engine.Move(RSF_States.DPad.Down, 0.70d);
         }
     }
 
@@ -455,7 +455,7 @@ public class RSF_7696_AutoBlue11 extends RSF_BaseOp {
     }
 
     public void Stage_17() {
-        int target = -(int)(Full_Rotation * 1.40f);
+        int target = -(int)(Full_Rotation * 1.30f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) > target) {
             engine.Move(new RSF_Joysticks(-1.0d, 1.0d), 1.0d);

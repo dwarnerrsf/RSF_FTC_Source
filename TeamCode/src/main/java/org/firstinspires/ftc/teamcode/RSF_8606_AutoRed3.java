@@ -467,7 +467,7 @@ public class RSF_8606_AutoRed3 extends RSF_BaseOp {
     }
 
     public void Stage_19() {
-        int target = (int) (Full_Rotation * 1.70f);
+        int target = (int) (Full_Rotation * 1.68f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight) < target) {
             engine.Move(new RSF_Joysticks(-1.0d, 1.0d), 1.0d);
@@ -479,7 +479,7 @@ public class RSF_8606_AutoRed3 extends RSF_BaseOp {
     }
 
     public void Stage_20() {
-        int target = (int) (Full_Rotation * 1.0f);
+        int target = (int) (Full_Rotation * 0.40f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target) {
             engine.SetSpeed(1.0d);

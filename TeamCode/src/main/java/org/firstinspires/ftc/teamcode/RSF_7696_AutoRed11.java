@@ -240,7 +240,7 @@ public class RSF_7696_AutoRed11 extends RSF_BaseOp {
     }
 
     public void Stage_4() {
-        int target = -(int)(Full_Rotation * 0.65f);
+        int target = -(int)(Full_Rotation * 0.55f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight) > target) {
             engine.SetSpeed(0.50d);
