@@ -266,7 +266,7 @@ public class RSF_8606_PartnerShoot2 extends RSF_BaseOp {
     }
 
     public void Stage_7() {
-        int target = (int) (Full_Rotation * 2.0f);
+        int target = (int) (Full_Rotation * 2.50f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target) {
             engine.SetSpeed(1.0d);

@@ -39,7 +39,7 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
-@TeleOp(name="Pushbot: 8606 CS Red", group="Pushbot")
+@TeleOp(name="Pushbot: 8606 CS Blue", group="Pushbot")
 public class RSF_8606_CounterStrike_Red extends RSF_BaseOp {
     private int beaconIndex = 0;
     private int stage = 0;
@@ -219,10 +219,10 @@ public class RSF_8606_CounterStrike_Red extends RSF_BaseOp {
     }
 
     public void Stage_7() {
-        int target = (int) (Full_Rotation * 0.35f);
+        int target = (int) (Full_Rotation * 0.65f);
 
-        if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target) {
-            engine.Move(new RSF_Joysticks(1.0d, -1.0d), 0.20d);
+        if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight) < target) {
+            engine.Move(new RSF_Joysticks(-1.0d, 1.0d), 0.20d);
 
             telemetry.addData("Target: ", target);
         } else {
@@ -231,9 +231,9 @@ public class RSF_8606_CounterStrike_Red extends RSF_BaseOp {
     }
 
     public void Stage_8() {
-        int target = (int) (Full_Rotation * 6.50f);
+        int target = (int) (Full_Rotation * 6.35f);
 
-        if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target || time < 5.0f) {
+        if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target && time < 5.0f) {
             engine.SetSpeed(1.0d);
             engine.MoveTo(target);
 

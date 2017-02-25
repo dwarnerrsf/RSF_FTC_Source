@@ -222,14 +222,14 @@ public class RSF_7696_AutoRed11 extends RSF_BaseOp {
     }
 
     public void Stage_3() {
-        int target = -(int)(Full_Rotation * 3.15f);
+        int target = -(int)(Full_Rotation * 2.85f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight) > target) {
             engine.SetSpeed(0.50d);
             engine.TestTurn();
 
             telemetry.addData("Target: ", target);
-            telemetry.addData("Current: ", engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft));
+            telemetry.addData("Current: ", engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight));
         }
         else {
             resetStartTime();
@@ -240,7 +240,7 @@ public class RSF_7696_AutoRed11 extends RSF_BaseOp {
     }
 
     public void Stage_4() {
-        int target = -(int)(Full_Rotation * 0.55f);
+        int target = -(int)(Full_Rotation * 0.65f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight) > target) {
             engine.SetSpeed(0.50d);
@@ -391,7 +391,7 @@ public class RSF_7696_AutoRed11 extends RSF_BaseOp {
     }
 
     public void Stage_13() {
-        int target = -(int)(Full_Rotation * 1.40f);
+        int target = -(int)(Full_Rotation * 1.25f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontRight) > target) {
             engine.Move(new RSF_Joysticks(1.0d, -1.0d), 1.0d);

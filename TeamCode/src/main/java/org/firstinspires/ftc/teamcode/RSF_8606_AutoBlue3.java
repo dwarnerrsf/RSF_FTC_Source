@@ -224,31 +224,26 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
     }
 
     public void GetColor() {
-        if (useColor) {
-            results = color.Detect();
-            moveFlap = true;
+        results = color.Detect();
 
-            switch (results) {
-                case Blue:
-                    colorOutput = "Blue";
-                    break;
-                case Red:
-                    colorOutput = "Red";
-                    break;
-                default:
-                    colorOutput = "None";
-                    break;
-            }
+        switch (results) {
+            case Blue:
+                colorOutput = "Blue";
+                break;
+            case Red:
+                colorOutput = "Red";
+                break;
+            default:
+                colorOutput = "None";
+                break;
         }
     }
 
     public void GetFlapper() {
-        if (moveFlap) {
-            if (results == RSF_States.SensorColor.Red) {
-                flap.setPosition(0.0d);
-            } else if (results == RSF_States.SensorColor.Blue) {
-                flap.setPosition(0.9375d);
-            }
+        if (results == RSF_States.SensorColor.Red) {
+            flap.setPosition(0.0d);
+        } else if (results == RSF_States.SensorColor.Blue) {
+            flap.setPosition(0.9375d);
         }
     }
 
@@ -266,7 +261,7 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
     }
 
     public void Stage_1() {
-        int target = (int) (Full_Rotation * 4.02f);
+        int target = (int) (Full_Rotation * 3.77f);
         shoot_1.setPower(-0.25d);
         shoot_2.setPower(-0.25d);
 
@@ -282,7 +277,7 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
     }
 
     public void Stage_2() {
-        int target = (int) (Full_Rotation * 0.75f);
+        int target = (int) (Full_Rotation * 1.0f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target) {
             engine.Move(new RSF_Joysticks(1.0d, -1.0d), 0.20d);
@@ -299,7 +294,6 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
         } else if (_coordinates.Rotation > 92.0f) {
             engine.Move(new RSF_Joysticks(1.0d, -1.0d), 0.10d);
         } else {
-            useColor = true;
             Next(5);
         }
     }
@@ -328,9 +322,7 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
         } else if (_coordinates.Rotation > 92.0f) {
             engine.Move(new RSF_Joysticks(1.0d, -1.0d), 0.10d);
         } else {
-            results = RSF_States.SensorColor.None;
-            moveFlap = false;
-            useColor = false;
+            //results = RSF_States.SensorColor.None;
             Next(8);
         }
     }
@@ -339,8 +331,6 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
         if (time < 0.35f) {
             engine.Stop();
         } else {
-            moveFlap = false;
-            useColor = false;
             Next(8);
         }
     }
@@ -354,22 +344,25 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
     }
 
     public void Stage_9() {
-        if (_coordinates.Y > -325.0f) {
+        if (_coordinates.Y > -350.0f) {
             engine.Move(RSF_States.DPad.Down, 0.50d);
         } else {
-            if (_coordinates.Rotation < 110.0f) {
+            /*if (_coordinates.Rotation < 105.0f) {
                 engine.Move(new RSF_Joysticks(-1.0d, 1.0d), 0.10d);
-            } else if (_coordinates.Rotation > 115.0f) {
+            } else if (_coordinates.Rotation > 110.0f) {
                 engine.Move(new RSF_Joysticks(1.0d, -1.0d), 0.10d);
             } else {
                 beaconIndex = 2;
                 Next(10);
-            }
+            }*/
+
+            beaconIndex = 2;
+            Next(10);
         }
     }
 
     public void Stage_10() {
-        int target = -(int) (Full_Rotation * 4.10f);
+        int target = -(int) (Full_Rotation * 4.0f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) > target) {
             engine.Move(RSF_States.DPad.Left, 1.0d);
@@ -386,15 +379,11 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
         } else if (_coordinates.Rotation > 92.0f) {
             engine.Move(new RSF_Joysticks(1.0d, -1.0d), 0.10d);
         } else {
-            useColor = true;
             Next(14);
         }
     }
 
     public void Stage_12() {
-        useColor = true;
-        moveFlap = true;
-
         if (_coordinates.X > -1785.0f) {
             engine.Move(RSF_States.DPad.Left, 0.10d);
         } else if (_coordinates.X < -1815.0f) {
@@ -405,9 +394,6 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
     }
 
     public void Stage_13() {
-        useColor = true;
-        moveFlap = true;
-
         if (_coordinates.Rotation < 88.0f) {
             engine.Move(new RSF_Joysticks(-1.0d, 1.0d), 0.10d);
         } else if (_coordinates.Rotation > 92.0f) {
@@ -418,9 +404,6 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
     }
 
     public void Stage_14() {
-        useColor = true;
-        moveFlap = true;
-
         if (_coordinates.Y < 1300.0f) {
             engine.Move(RSF_States.DPad.Up, 0.30d);
         } else {
@@ -429,16 +412,12 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
     }
 
     public void Stage_15() {
-        useColor = true;
-        moveFlap = true;
 
         if (_coordinates.Rotation < 88.0f) {
             engine.Move(new RSF_Joysticks(-1.0d, 1.0d), 0.10d);
         } else if (_coordinates.Rotation > 92.0f) {
             engine.Move(new RSF_Joysticks(1.0d, -1.0d), 0.10d);
         } else {
-            /*moveFlap = false;
-            useColor = false;*/
             Next(17);
         }
     }
@@ -447,8 +426,6 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
         if (time < 0.35f) {
             engine.Stop();
         } else {
-            moveFlap = false;
-            useColor = false;
             Next(17);
         }
     }
@@ -457,8 +434,6 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
         if (_coordinates.Y < 1465.0f) {
             engine.Move(RSF_States.DPad.Up, 0.35d);
         } else {
-            moveFlap = false;
-            useColor = false;
             Next(18);
         }
     }
@@ -473,7 +448,7 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
     }
 
     public void Stage_19() {
-        int target = (int) (Full_Rotation * 1.70f);
+        int target = (int) (Full_Rotation * 1.65f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target) {
             engine.Move(new RSF_Joysticks(1.0d, -1.0d), 1.0d);
@@ -485,7 +460,7 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
     }
 
     public void Stage_20() {
-        int target = (int) (Full_Rotation * 0.40f);
+        int target = (int) (Full_Rotation * 1.0f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target) {
             engine.SetSpeed(1.0d);
@@ -530,7 +505,7 @@ public class RSF_8606_AutoBlue3 extends RSF_BaseOp {
     }
 
     public void Stage_25() {
-        int target = (int) (Full_Rotation * 2.25f);
+        int target = (int) (Full_Rotation * 2.40f);
 
         if (engine.GetEncoderPosition(RSF_States.EngineMotor.FrontLeft) < target) {
             engine.SetSpeed(1.0d);
